@@ -1,4 +1,5 @@
 public class Customer extends Role {
+  private static final long serialVersionUID = 1L;
 
   public Customer() {
 

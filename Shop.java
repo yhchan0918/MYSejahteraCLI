@@ -1,4 +1,5 @@
 public class Shop extends Role {
+  private static final long serialVersionUID = 1L;
   private String manager;
 
   public Shop() {
