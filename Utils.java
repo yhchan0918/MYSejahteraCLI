@@ -30,11 +30,10 @@ public class Utils {
       ois.close();
       fis.close();
     } catch (IOException ioe) {
-      ioe.printStackTrace();
+      System.out.println("IOException is caught");
 
     } catch (ClassNotFoundException c) {
       System.out.println("Class not found");
-      c.printStackTrace();
 
     }
 
@@ -69,11 +68,10 @@ public class Utils {
       ois.close();
       fis.close();
     } catch (IOException ioe) {
-      ioe.printStackTrace();
+      System.out.println("IOException is caught");
 
     } catch (ClassNotFoundException c) {
       System.out.println("Class not found");
-      c.printStackTrace();
 
     }
 
