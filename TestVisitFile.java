@@ -9,7 +9,6 @@ public class TestVisitFile {
     visitsList.add(new Visit("Boe", "Vivo Restaurant"));
     visitsList.add(new Visit("Jason", "Sushi Mentai"));
     visitsList.add(new Visit("Delphine", "Popular BookVisit"));
-
     Utils.saveToFile(visitsList, "visits");
     Utils.readVisitsFromFile();
   }
