@@ -6,8 +6,8 @@ import java.util.InputMismatchException;
 
 public class CustomerMain {
   public static void main(String[] args) throws IOException {
-    System.out.println(new Visit("YHCHAN", "tesco").ToTime());
-    System.out.println(new Visit("YHCHAN", "tesco").ToDate());
+    System.out.println(new Visit("YHCHAN", "tesco").toTime());
+    System.out.println(new Visit("YHCHAN", "tesco").toDate());
     System.out.println("Welcome to MYSejahtera");
     System.out.println("Please Type the No of your desired action and press ENTER to proceed");
     System.out.println("1. Sign In");
