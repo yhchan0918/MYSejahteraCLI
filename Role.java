@@ -1,6 +1,4 @@
-import java.io.Serializable;
-
-public class Role implements Serializable {
+public class Role extends Record {
 
   private static final long serialVersionUID = 1L;
   private String name;
@@ -16,8 +14,16 @@ public class Role implements Serializable {
     this.status = status;
   }
 
+  public String getName() {
+    return name;
+  }
+
+  public String getPhone() {
+    return phone;
+  }
+
   public String getStatus() {
-    return this.status;
+    return status;
   }
 
   public void setStatus(String status) {

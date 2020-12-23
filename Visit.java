@@ -1,7 +1,9 @@
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class Visit {
+public class Visit extends Record {
+
+  private static final long serialVersionUID = 1L;
   private LocalDateTime checkInTime;
   private String customer;
   private String shop;

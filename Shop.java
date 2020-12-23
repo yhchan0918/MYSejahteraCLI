@@ -11,6 +11,10 @@ public class Shop extends Role {
     this.manager = manager;
   }
 
+  public String getManager() {
+    return manager;
+  }
+
   @Override
   public String toString() {
     return super.toString() + " " + manager;

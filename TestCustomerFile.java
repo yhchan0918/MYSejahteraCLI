@@ -9,7 +9,7 @@ public class TestCustomerFile {
     customersList.add(new Customer("Delphine", "0136744547", "Normal"));
     customersList.add(new Customer("Jason", "0177876345", "Normal"));
 
-    Utils.saveCustomersToFile(customersList);
+    Utils.saveToFile(customersList, "customers");
     Utils.readCustomersFromFile();
   }
 
