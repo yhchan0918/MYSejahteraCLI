@@ -82,4 +82,42 @@ public class Utils {
     return shopsList;
   }
 
+  public static void saveVisitsToFile(ArrayList<Visit> visitsList) throws Exception {
+
+    try {
+      FileOutputStream fos = new FileOutputStream("visits");
+      ObjectOutputStream oos = new ObjectOutputStream(fos);
+      oos.writeObject(visitsList);
+      oos.close();
+      fos.close();
+    } catch (IOException ioe) {
+      ioe.printStackTrace();
+    }
+  }
+
+  public static ArrayList<Visit> readVisitsFromFile() throws Exception {
+    ArrayList<Visit> VisitsList = new ArrayList<>();
+    try {
+      FileInputStream fis = new FileInputStream("visits");
+      ObjectInputStream ois = new ObjectInputStream(fis);
+
+      VisitsList = (ArrayList) ois.readObject();
+
+      ois.close();
+      fis.close();
+    } catch (IOException ioe) {
+      System.out.println("IOException is caught");
+
+    } catch (ClassNotFoundException c) {
+      System.out.println("Class not found");
+
+    }
+
+    // TODO: Remember Delete this Dummy function before submit
+    // for (Visit visit : VisitsList) {
+    // System.out.println(visit);
+    // }
+    return VisitsList;
+  }
+
 }
