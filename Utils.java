@@ -6,12 +6,12 @@ import java.io.FileInputStream;
 import java.io.ObjectInputStream;
 
 public class Utils {
-  public static void saveCustomersToFile(ArrayList<Customer> customersList) throws Exception {
+  public static <E extends Record> void saveToFile(ArrayList<E> list, String fileName) throws Exception {
 
     try {
-      FileOutputStream fos = new FileOutputStream("customers");
+      FileOutputStream fos = new FileOutputStream(fileName);
       ObjectOutputStream oos = new ObjectOutputStream(fos);
-      oos.writeObject(customersList);
+      oos.writeObject(list);
       oos.close();
       fos.close();
     } catch (IOException ioe) {
@@ -44,19 +44,6 @@ public class Utils {
     return customersList;
   }
 
-  public static void saveShopsToFile(ArrayList<Shop> shopsList) throws Exception {
-
-    try {
-      FileOutputStream fos = new FileOutputStream("shops");
-      ObjectOutputStream oos = new ObjectOutputStream(fos);
-      oos.writeObject(shopsList);
-      oos.close();
-      fos.close();
-    } catch (IOException ioe) {
-      ioe.printStackTrace();
-    }
-  }
-
   public static ArrayList<Shop> readShopsFromFile() throws Exception {
     ArrayList<Shop> shopsList = new ArrayList<>();
     try {
@@ -82,26 +69,13 @@ public class Utils {
     return shopsList;
   }
 
-  public static void saveVisitsToFile(ArrayList<Visit> visitsList) throws Exception {
-
-    try {
-      FileOutputStream fos = new FileOutputStream("visits");
-      ObjectOutputStream oos = new ObjectOutputStream(fos);
-      oos.writeObject(visitsList);
-      oos.close();
-      fos.close();
-    } catch (IOException ioe) {
-      ioe.printStackTrace();
-    }
-  }
-
   public static ArrayList<Visit> readVisitsFromFile() throws Exception {
-    ArrayList<Visit> VisitsList = new ArrayList<>();
+    ArrayList<Visit> visitsList = new ArrayList<>();
     try {
       FileInputStream fis = new FileInputStream("visits");
       ObjectInputStream ois = new ObjectInputStream(fis);
 
-      VisitsList = (ArrayList) ois.readObject();
+      visitsList = (ArrayList) ois.readObject();
 
       ois.close();
       fis.close();
@@ -117,7 +91,7 @@ public class Utils {
     // for (Visit visit : VisitsList) {
     // System.out.println(visit);
     // }
-    return VisitsList;
+    return visitsList;
   }
 
 }

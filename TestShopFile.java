@@ -10,7 +10,7 @@ public class TestShopFile {
     shopsList.add(new Shop("Sushi Mentai", "07-4554425", "Normal", "Manager3"));
     shopsList.add(new Shop("Popular BookShop", "07-7647550", "Normal", "Manager4"));
 
-    Utils.saveShopsToFile(shopsList);
+    Utils.saveToFile(shopsList, "shops");
     Utils.readShopsFromFile();
   }
 
