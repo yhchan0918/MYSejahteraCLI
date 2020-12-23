@@ -22,13 +22,13 @@ public class Utils {
     }
   }
 
-  public static ArrayList<Customer> readCustomersFromFile() throws Exception {
-    ArrayList<Customer> customersList = new ArrayList<>();
+  public static <T extends Record> ArrayList<T> readListFromFile(String filename) throws Exception {
+    ArrayList<T> list = new ArrayList<>();
     try {
-      FileInputStream fis = new FileInputStream("customers");
+      FileInputStream fis = new FileInputStream(filename);
       ObjectInputStream ois = new ObjectInputStream(fis);
 
-      customersList = (ArrayList) ois.readObject();
+      list = (ArrayList) ois.readObject();
 
       ois.close();
       fis.close();
@@ -40,61 +40,7 @@ public class Utils {
 
     }
 
-    // TODO: Remember Delete this Dummy function before submit
-    // for (Customer customer : customersList) {
-    // System.out.println(customer);
-    // }
-    return customersList;
-  }
-
-  public static ArrayList<Shop> readShopsFromFile() throws Exception {
-    ArrayList<Shop> shopsList = new ArrayList<>();
-    try {
-      FileInputStream fis = new FileInputStream("shops");
-      ObjectInputStream ois = new ObjectInputStream(fis);
-
-      shopsList = (ArrayList) ois.readObject();
-
-      ois.close();
-      fis.close();
-    } catch (IOException ioe) {
-      System.out.println("IOException is caught");
-
-    } catch (ClassNotFoundException c) {
-      System.out.println("Class not found");
-
-    }
-
-    // TODO: Remember Delete this Dummy function before submit
-    // for (Shop shop : shopsList) {
-    // System.out.println(shop);
-    // }
-    return shopsList;
-  }
-
-  public static ArrayList<Visit> readVisitsFromFile() throws Exception {
-    ArrayList<Visit> visitsList = new ArrayList<>();
-    try {
-      FileInputStream fis = new FileInputStream("visits");
-      ObjectInputStream ois = new ObjectInputStream(fis);
-
-      visitsList = (ArrayList) ois.readObject();
-
-      ois.close();
-      fis.close();
-    } catch (IOException ioe) {
-      System.out.println("IOException is caught");
-
-    } catch (ClassNotFoundException c) {
-      System.out.println("Class not found");
-
-    }
-
-    // TODO: Remember Delete this Dummy function before submit
-    // for (Visit visit : VisitsList) {
-    // System.out.println(visit);
-    // }
-    return visitsList;
+    return list;
   }
 
   public static int getUserChoice(List<Integer> list) {
