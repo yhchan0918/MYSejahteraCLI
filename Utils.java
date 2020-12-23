@@ -62,4 +62,18 @@ public class Utils {
     }
   }
 
+  public static String repeat(int count, String with) {
+    return new String(new char[count]).replace("\0", with);
+  }
+
+  public static void displayHeader(String title) {
+    String header = "| " + title + " |%n";
+    System.out.println(title.length());
+    System.out.println(header.length());
+    String line = "+" + repeat(header.length() - 4, "-") + "+%n";
+    System.out.format(line);
+    System.out.format(header);
+    System.out.format(line);
+  }
+
 }
