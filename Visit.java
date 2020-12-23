@@ -15,13 +15,17 @@ public class Visit {
     this.shop = shop;
   };
 
-  public String ToDate() {
+  public String toDate() {
     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("YYYY-MM-dd");
     return dtf.format(this.checkInTime);
   }
 
-  public String ToTime() {
+  public String toTime() {
     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("k:mm:ss");
     return dtf.format(this.checkInTime);
+  }
+
+  public String toString() {
+    return toDate() + " " + toTime() + " " + customer + " " + shop;
   }
 }
