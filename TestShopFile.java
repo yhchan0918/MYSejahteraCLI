@@ -3,7 +3,6 @@ import java.util.ArrayList;
 public class TestShopFile {
   public static void main(String[] args) throws Exception {
     ArrayList<Shop> shopsList = new ArrayList<Shop>();
-    Shop testShop = new Shop("Watsons", "07-1236242", "Normal", "Manager1");
 
     shopsList.add(new Shop("Watsons", "07-8956242", "Normal", "Manager1"));
     shopsList.add(new Shop("Vivo Restaurant", "07-4785515", "Normal", "Manager2"));
