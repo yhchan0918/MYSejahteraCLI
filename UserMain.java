@@ -2,17 +2,18 @@ import java.util.Scanner;
 import java.io.IOException;
 import java.util.List;
 import java.util.Arrays;
+import java.util.ArrayList;
 
 public class UserMain {
-  private Customer currentCustomer;
-  private Shop currentShop;
+  private static Customer currentCustomer;
+  private static Shop currentShop;
 
-  public static void main(String[] args) throws IOException {
+  public static void main(String[] args) throws Exception {
     displayMainMenu();
 
   }
 
-  private static void displayMainMenu() {
+  private static void displayMainMenu() throws Exception {
     Utils.displayHeader("Welcome to Contact Tracing System For COVID-19");
     System.out.println("| Main Menu |");
     System.out.println("Please Type the No of your desired action and press ENTER to proceed");
@@ -35,15 +36,41 @@ public class UserMain {
     }
   }
 
-  private static void signIn(String role) {
+  private static void signIn(String role) throws Exception {
     String title = "Sign In as " + role + " role";
     Utils.displayHeader(title);
-    if (role.equals("Customer")) {
-      System.out.println(role);
+    Scanner input = new Scanner(System.in);
+    String prompt = role.equals("Customer") ? "Enter Your Name" : "Enter Your Shop Name";
 
-    } else {
-      System.out.println(role);
+    while (true) {
+      System.out.println(prompt + " (Note: Case Sensitive)");
+      String name = input.nextLine(); // read away unwanted newline.
+      if (role.equals("Customer")) {
+        if (validateCustomer(name)) {
+          System.out.println("Successfully Login");
+          break;
+        } else {
+          System.out.println("Invalid Credentials. Please Try Again");
+          continue;
+        }
+      } else {
+        System.out.println("shop");
+      }
     }
+
+  }
+
+  private static boolean validateCustomer(String name) throws Exception {
+    ArrayList<Customer> list = Utils.readListFromFile("customers");
+
+    for (Customer customer : list) {
+      if (customer.getName().equals(name)) {
+        System.out.println("imcalled");
+        return true;
+      }
+
+    }
+    return false;
 
   }
 

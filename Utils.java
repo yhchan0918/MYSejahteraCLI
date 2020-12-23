@@ -50,7 +50,7 @@ public class Utils {
         Scanner keyboard = new Scanner(System.in);
         int num = keyboard.nextInt();
         if (list.contains(num)) {
-          keyboard.close();
+
           return num;
         } else {
           System.out.println("Please Enter Integer within " + list.get(0) + " - " + list.get(list.size() - 1));
@@ -68,8 +68,6 @@ public class Utils {
 
   public static void displayHeader(String title) {
     String header = "| " + title + " |%n";
-    System.out.println(title.length());
-    System.out.println(header.length());
     String line = "+" + repeat(header.length() - 4, "-") + "+%n";
     System.out.format(line);
     System.out.format(header);
