@@ -4,6 +4,9 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.io.FileInputStream;
 import java.io.ObjectInputStream;
+import java.util.InputMismatchException;
+import java.util.Scanner;
+import java.util.List;
 
 public class Utils {
   public static <E extends Record> void saveToFile(ArrayList<E> list, String fileName) throws Exception {
@@ -92,6 +95,25 @@ public class Utils {
     // System.out.println(visit);
     // }
     return visitsList;
+  }
+
+  public static int getUserChoice(List<Integer> list) {
+
+    while (true) {
+      try {
+        Scanner keyboard = new Scanner(System.in);
+        int num = keyboard.nextInt();
+        if (list.contains(num)) {
+          keyboard.close();
+          return num;
+        } else {
+          System.out.println("Please Enter Integer within " + list.get(0) + " - " + list.get(list.size() - 1));
+          continue;
+        }
+      } catch (InputMismatchException e) {
+        System.out.println("Only Integer is allowed. Please Try Again");
+      }
+    }
   }
 
 }
