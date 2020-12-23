@@ -11,7 +11,6 @@ public class TestVisitFile {
     visitsList.add(new Visit("Delphine", "Popular BookVisit"));
 
     Utils.saveToFile(visitsList, "visits");
-
     Utils.readVisitsFromFile();
   }
 
