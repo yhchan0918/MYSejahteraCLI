@@ -16,19 +16,19 @@ public class CustomerMain {
     int choice = Utils.getUserChoice(options);
     switch (choice) {
       case 1:
-        SignIn();
+        signIn();
         break;
       case 2:
-        Register();
+        register();
         break;
     }
   }
 
-  private static void Register() {
+  private static void register() {
     System.out.println("Register");
   }
 
-  private static void SignIn() {
+  private static void signIn() {
     System.out.println("SignIn");
   }
 }
