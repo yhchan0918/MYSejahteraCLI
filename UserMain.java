@@ -1,8 +1,9 @@
 import java.util.Scanner;
-import java.io.IOException;
 import java.util.List;
 import java.util.Arrays;
 import java.util.ArrayList;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public class UserMain {
   private static Customer currentCustomer;
@@ -141,11 +142,27 @@ public class UserMain {
 
   private static void viewVisitsOfCustomer() throws Exception {
     Utils.displayHeader("View History of the shops you have visted");
+    ArrayList<Visit> visitslist = Utils.readListFromFile("visits");
+    // Filter visitslist by currentCustomer name
+    visitslist.removeIf(visit -> !(visit.getCustomer().equals(currentCustomer.getName())));
+    ArrayList<String> colNamesList = new ArrayList<>(Arrays.asList("No", "Date", "Time", "Shop"));
+    ArrayList<Integer> cmaxLen = new ArrayList<>();
+    // for (int i = 0; i < colNamesList.size(); i++) {
+    // cmaxLen.add(Math.max(colNamesList.get(i), visitslist.get(i)));
+    // }
+
+    for (int i = 0; i < visitslist.size(); i++) {
+      System.out.format("%-10d%-32s%-16s%-16s%", i + 1, visitslist.get(i).getDate(), visitslist.get(i).getTime(),
+          visitslist.get(i).getShop());
+
+    }
+
   }
 
   private static void viewCustomerStatus() throws Exception {
     Utils.displayHeader("View Customer Status");
-    System.out.println("Your Shop Status: " + currentCustomer.getStatus() + "\n");
+    System.out.println("Your Status: " + currentCustomer.getStatus() + "\n");
+
     goBack();
   }
 

@@ -11,6 +11,7 @@ public class Role extends Record {
   public Role(String name, String phone) {
     this.name = name;
     this.phone = phone;
+
   }
 
   public Role(String name, String phone, String status) {
