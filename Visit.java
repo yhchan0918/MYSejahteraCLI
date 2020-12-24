@@ -17,17 +17,25 @@ public class Visit extends Record {
     this.shop = shop;
   };
 
-  public String toDate() {
+  public String getCustomer() {
+    return customer;
+  }
+
+  public String getShop() {
+    return shop;
+  }
+
+  public String getDate() {
     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("YYYY-MM-dd");
     return dtf.format(this.checkInTime);
   }
 
-  public String toTime() {
+  public String getTime() {
     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("k:mm:ss");
     return dtf.format(this.checkInTime);
   }
 
   public String toString() {
-    return toDate() + " " + toTime() + " " + customer + " " + shop;
+    return getDate() + " " + getTime() + " " + customer + " " + shop;
   }
 }

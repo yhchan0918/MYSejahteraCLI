@@ -50,7 +50,7 @@ public class Utils {
         Scanner keyboard = new Scanner(System.in);
         int num = keyboard.nextInt();
         if (list.contains(num)) {
-
+          System.out.println();
           return num;
         } else {
           System.out.println("Please Enter Integer within " + list.get(0) + " - " + list.get(list.size() - 1));
@@ -60,6 +60,7 @@ public class Utils {
         System.out.println("Only Integer is allowed. Please Try Again");
       }
     }
+
   }
 
   public static String repeat(int count, String with) {

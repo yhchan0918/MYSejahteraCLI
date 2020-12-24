@@ -7,8 +7,12 @@ import java.util.ArrayList;
 public class UserMain {
   private static Customer currentCustomer;
   private static Shop currentShop;
+  private static ArrayList<Shop> shopslist;
 
   public static void main(String[] args) throws Exception {
+    System.out.println("Loading......");
+    shopslist = Utils.readListFromFile("shops");
+
     displayMainMenu();
 
   }
@@ -47,7 +51,7 @@ public class UserMain {
       String name = input.nextLine();
 
       if (validateUser(role, name)) {
-        System.out.println("Successfully Login");
+        System.out.println("Successfully Login!!" + "\n");
         if (role.equals("Customer")) {
           displayCustomerMenu();
         } else {
@@ -62,37 +66,34 @@ public class UserMain {
   }
 
   private static void register() throws Exception {
-    Utils.displayHeader("Register as new customer");
     ArrayList<Customer> customerslist = Utils.readListFromFile("customers");
+    Utils.displayHeader("Register As New Customer");
     Scanner input = new Scanner(System.in);
-
-    System.out.println("Enter New Customer Name");
+    System.out.println("Enter new customer name");
     String name = input.nextLine();
-    System.out.println("Enter New Customer Phone Number");
+    System.out.println("Enter new customer phone number");
     String phone = input.nextLine();
     customerslist.add(new Customer(name, phone));
     Utils.saveToFile(customerslist, "customers");
+    System.out.println("Successfully Register!!" + "\n");
     displayCustomerMenu();
   }
 
   private static boolean validateUser(String role, String name) throws Exception {
+    ArrayList<Customer> customerslist = Utils.readListFromFile("customers");
     if (role.equals("Customer")) {
-      ArrayList<Customer> list = Utils.readListFromFile("customers");
-
-      for (Customer customer : list) {
+      for (Customer customer : customerslist) {
         if (customer.getName().equals(name)) {
           currentCustomer = customer;
-          System.out.println(currentCustomer);
           return true;
         }
       }
       return false;
     } else {
-      ArrayList<Shop> list = Utils.readListFromFile("shops");
-      for (Shop shop : list) {
+
+      for (Shop shop : shopslist) {
         if (shop.getName().equals(name)) {
           currentShop = shop;
-          System.out.println(currentShop);
           return true;
         }
       }
@@ -100,7 +101,7 @@ public class UserMain {
     }
   }
 
-  private static void displayCustomerMenu() {
+  private static void displayCustomerMenu() throws Exception {
     Utils.displayHeader("Customer Menu");
     System.out.println("Please Type the No of your desired action and press ENTER to proceed");
     System.out.println("1. Check In Shop");
@@ -121,16 +122,48 @@ public class UserMain {
     }
   }
 
-  private static void checkIn() {
+  private static void checkIn() throws Exception {
+    ArrayList<Visit> visitslist = Utils.readListFromFile("visits");
     Utils.displayHeader("Check In Shop");
+    System.out.println("Please Type the No of the Shop you want to check in");
+    List<Integer> options = new ArrayList<Integer>();
+    for (int i = 0; i < shopslist.size(); i++) {
+      int index = i + 1;
+      options.add(index);
+      System.out.println(index + ". " + shopslist.get(i).getName());
+    }
+    int choice = Utils.getUserChoice(options);
+    visitslist.add(new Visit(currentCustomer.getName(), shopslist.get(choice - 1).getName()));
+    Utils.saveToFile(visitslist, "visits");
+    System.out.println("Successfully Check In!!" + "\n");
+    goBack();
   }
 
-  private static void viewVisitsOfCustomer() {
+  private static void viewVisitsOfCustomer() throws Exception {
     Utils.displayHeader("View History of the shops you have visted");
   }
 
-  private static void viewCustomerStatus() {
+  private static void viewCustomerStatus() throws Exception {
     Utils.displayHeader("View Customer Status");
+    System.out.println("Your Shop Status: " + currentCustomer.getStatus() + "\n");
+    goBack();
+  }
+
+  private static void goBack() throws Exception {
+    System.out.println("Please Type the No of your desired action and press ENTER to proceed");
+    System.out.println("1. Go Back Customer Menu");
+    System.out.println("2. Go To Main Menu");
+
+    List<Integer> options = Arrays.asList(1, 2);
+    int choice = Utils.getUserChoice(options);
+    switch (choice) {
+      case 1:
+        displayCustomerMenu();
+        break;
+      case 2:
+        displayMainMenu();
+        break;
+    }
   }
 
   private static void displayShopMenu() {

@@ -14,6 +14,7 @@ public class TestShopFile {
     for (Shop shop : list) {
       System.out.println(shop);
     }
+
   }
 
 }
