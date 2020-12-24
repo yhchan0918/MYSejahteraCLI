@@ -5,6 +5,10 @@ public class Customer extends Role {
 
   };
 
+  public Customer(String name, String phone) {
+    super(name, phone);
+  }
+
   public Customer(String name, String phone, String status) {
     super(name, phone, status);
   }

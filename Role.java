@@ -3,9 +3,14 @@ public class Role extends Record {
   private static final long serialVersionUID = 1L;
   private String name;
   private String phone;
-  private String status;
+  private String status = "Normal";
 
   public Role() {
+  }
+
+  public Role(String name, String phone) {
+    this.name = name;
+    this.phone = phone;
   }
 
   public Role(String name, String phone, String status) {

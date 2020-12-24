@@ -44,45 +44,98 @@ public class UserMain {
 
     while (true) {
       System.out.println(prompt + " (Note: Case Sensitive)");
-      String name = input.nextLine(); // read away unwanted newline.
-      if (role.equals("Customer")) {
-        if (validateCustomer(name)) {
-          System.out.println("Successfully Login");
-          break;
+      String name = input.nextLine();
+
+      if (validateUser(role, name)) {
+        System.out.println("Successfully Login");
+        if (role.equals("Customer")) {
+          displayCustomerMenu();
         } else {
-          System.out.println("Invalid Credentials. Please Try Again");
-          continue;
+          displayShopMenu();
         }
+        break;
       } else {
-        System.out.println("shop");
+        System.out.println("Invalid Credentials. Please Try Again");
+        continue;
       }
     }
-
   }
 
-  private static boolean validateCustomer(String name) throws Exception {
-    ArrayList<Customer> list = Utils.readListFromFile("customers");
+  private static void register() throws Exception {
+    Utils.displayHeader("Register as new customer");
+    ArrayList<Customer> customerslist = Utils.readListFromFile("customers");
+    Scanner input = new Scanner(System.in);
 
-    for (Customer customer : list) {
-      if (customer.getName().equals(name)) {
-        System.out.println("imcalled");
-        return true;
+    System.out.println("Enter New Customer Name");
+    String name = input.nextLine();
+    System.out.println("Enter New Customer Phone Number");
+    String phone = input.nextLine();
+    customerslist.add(new Customer(name, phone));
+    Utils.saveToFile(customerslist, "customers");
+    displayCustomerMenu();
+  }
+
+  private static boolean validateUser(String role, String name) throws Exception {
+    if (role.equals("Customer")) {
+      ArrayList<Customer> list = Utils.readListFromFile("customers");
+
+      for (Customer customer : list) {
+        if (customer.getName().equals(name)) {
+          currentCustomer = customer;
+          System.out.println(currentCustomer);
+          return true;
+        }
       }
-
+      return false;
+    } else {
+      ArrayList<Shop> list = Utils.readListFromFile("shops");
+      for (Shop shop : list) {
+        if (shop.getName().equals(name)) {
+          currentShop = shop;
+          System.out.println(currentShop);
+          return true;
+        }
+      }
+      return false;
     }
-    return false;
-
   }
 
   private static void displayCustomerMenu() {
-    System.out.println("CustomerMenu");
+    Utils.displayHeader("Customer Menu");
+    System.out.println("Please Type the No of your desired action and press ENTER to proceed");
+    System.out.println("1. Check In Shop");
+    System.out.println("2. View the history of the shops you have visted");
+    System.out.println("3. View Your Status");
+    List<Integer> options = Arrays.asList(1, 2, 3);
+    int choice = Utils.getUserChoice(options);
+    switch (choice) {
+      case 1:
+        checkIn();
+        break;
+      case 2:
+        viewVisitsOfCustomer();
+        break;
+      case 3:
+        viewCustomerStatus();
+        break;
+    }
+  }
+
+  private static void checkIn() {
+    Utils.displayHeader("Check In Shop");
+  }
+
+  private static void viewVisitsOfCustomer() {
+    Utils.displayHeader("View History of the shops you have visted");
+  }
+
+  private static void viewCustomerStatus() {
+    Utils.displayHeader("View Customer Status");
   }
 
   private static void displayShopMenu() {
-    System.out.println("ShopMenu");
+    Utils.displayHeader("View Shop Status");
+    System.out.println("Your Shop Status: " + currentShop.getStatus());
   }
 
-  private static void register() {
-    System.out.println("Register");
-  }
 }
