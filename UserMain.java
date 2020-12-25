@@ -23,7 +23,7 @@ public class UserMain {
     System.out.println("Please Type the No of your desired action and press ENTER to proceed");
     System.out.println("1. Sign In as Customer role");
     System.out.println("2. Sign In as Shop role");
-    System.out.println("3. Register");
+    System.out.println("3. Register as New Customer");
     System.out.println("4. Exit Program");
     List<Integer> options = Arrays.asList(1, 2, 3, 4);
     int choice = Utils.getUserChoice(options);
@@ -77,8 +77,10 @@ public class UserMain {
     String name = input.nextLine();
     System.out.println("Enter new customer phone number");
     String phone = input.nextLine();
-    customerslist.add(new Customer(name, phone));
+    Customer newCustomer = new Customer(name, phone);
+    customerslist.add(newCustomer);
     Utils.saveToFile(customerslist, "customers");
+    currentCustomer = newCustomer;
     System.out.println("Successfully Register!!" + "\n");
     displayCustomerMenu();
   }
@@ -148,20 +150,26 @@ public class UserMain {
     ArrayList<Visit> visitslist = Utils.readListFromFile("visits");
     // Filter visitslist by currentCustomer name
     visitslist.removeIf(visit -> !(visit.getCustomer().equals(currentCustomer.getName())));
-    // Convert ArrayList<Visit> to hashMap arraylist
-    ArrayList<HashMap<String, String>> hashMapVisitsList = new ArrayList<HashMap<String, String>>();
-    String[] colNamesList = { "No", "Date", "Time", "Shop" };
-    for (int i = 0; i < visitslist.size(); i++) {
-      int index = i + 1;
-      HashMap<String, String> map = new HashMap<>();
-      map.put("No", Integer.toString(index));
-      map.put("Date", visitslist.get(i).getDate());
-      map.put("Time", visitslist.get(i).getTime());
-      map.put("Shop", visitslist.get(i).getShop());
-      hashMapVisitsList.add(map);
+
+    // Check whether user have checked any shop
+    if (visitslist.isEmpty()) {
+      System.out.println("You have not checked in any shop yet");
+    } else {
+      // Convert ArrayList<Visit> to hashMap arraylist
+      ArrayList<HashMap<String, String>> hashMapVisitsList = new ArrayList<HashMap<String, String>>();
+      String[] colNamesList = { "No", "Date", "Time", "Shop" };
+      for (int i = 0; i < visitslist.size(); i++) {
+        int index = i + 1;
+        HashMap<String, String> map = new HashMap<>();
+        map.put("No", Integer.toString(index));
+        map.put("Date", visitslist.get(i).getDate());
+        map.put("Time", visitslist.get(i).getTime());
+        map.put("Shop", visitslist.get(i).getShop());
+        hashMapVisitsList.add(map);
+      }
+      // Print Table
+      Table.display(colNamesList, hashMapVisitsList);
     }
-    // Print Table
-    Table.display(colNamesList, hashMapVisitsList);
 
     goBack();
   }
