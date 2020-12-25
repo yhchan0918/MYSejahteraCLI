@@ -2,8 +2,7 @@ import java.util.Scanner;
 import java.util.List;
 import java.util.Arrays;
 import java.util.ArrayList;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
+import java.util.HashMap;
 
 public class UserMain {
   private static Customer currentCustomer;
@@ -25,8 +24,8 @@ public class UserMain {
     System.out.println("1. Sign In as Customer role");
     System.out.println("2. Sign In as Shop role");
     System.out.println("3. Register");
-
-    List<Integer> options = Arrays.asList(1, 2, 3);
+    System.out.println("4. Exit Program");
+    List<Integer> options = Arrays.asList(1, 2, 3, 4);
     int choice = Utils.getUserChoice(options);
     switch (choice) {
       case 1:
@@ -37,6 +36,10 @@ public class UserMain {
         break;
       case 3:
         register();
+        break;
+      case 4:
+        System.out.println("Exit...");
+        System.exit(0);
         break;
     }
   }
@@ -136,7 +139,7 @@ public class UserMain {
     int choice = Utils.getUserChoice(options);
     visitslist.add(new Visit(currentCustomer.getName(), shopslist.get(choice - 1).getName()));
     Utils.saveToFile(visitslist, "visits");
-    System.out.println("Successfully Check In!!" + "\n");
+    System.out.println("Successfully Check In!!");
     goBack();
   }
 
@@ -145,28 +148,32 @@ public class UserMain {
     ArrayList<Visit> visitslist = Utils.readListFromFile("visits");
     // Filter visitslist by currentCustomer name
     visitslist.removeIf(visit -> !(visit.getCustomer().equals(currentCustomer.getName())));
-    ArrayList<String> colNamesList = new ArrayList<>(Arrays.asList("No", "Date", "Time", "Shop"));
-    ArrayList<Integer> cmaxLen = new ArrayList<>();
-    // for (int i = 0; i < colNamesList.size(); i++) {
-    // cmaxLen.add(Math.max(colNamesList.get(i), visitslist.get(i)));
-    // }
-
+    // Convert ArrayList<Visit> to hashMap arraylist
+    ArrayList<HashMap<String, String>> hashMapVisitsList = new ArrayList<HashMap<String, String>>();
+    String[] colNamesList = { "No", "Date", "Time", "Shop" };
     for (int i = 0; i < visitslist.size(); i++) {
-      System.out.format("%-10d%-32s%-16s%-16s%", i + 1, visitslist.get(i).getDate(), visitslist.get(i).getTime(),
-          visitslist.get(i).getShop());
-
+      int index = i + 1;
+      HashMap<String, String> map = new HashMap<>();
+      map.put("No", Integer.toString(index));
+      map.put("Date", visitslist.get(i).getDate());
+      map.put("Time", visitslist.get(i).getTime());
+      map.put("Shop", visitslist.get(i).getShop());
+      hashMapVisitsList.add(map);
     }
-
-  }
-
-  private static void viewCustomerStatus() throws Exception {
-    Utils.displayHeader("View Customer Status");
-    System.out.println("Your Status: " + currentCustomer.getStatus() + "\n");
+    // Print Table
+    Table.display(colNamesList, hashMapVisitsList);
 
     goBack();
   }
 
+  private static void viewCustomerStatus() throws Exception {
+    Utils.displayHeader("View Customer Status");
+    System.out.println("Your Status: " + currentCustomer.getStatus());
+    goBack();
+  }
+
   private static void goBack() throws Exception {
+    System.out.println();
     System.out.println("Please Type the No of your desired action and press ENTER to proceed");
     System.out.println("1. Go Back Customer Menu");
     System.out.println("2. Go To Main Menu");
@@ -186,6 +193,12 @@ public class UserMain {
   private static void displayShopMenu() {
     Utils.displayHeader("View Shop Status");
     System.out.println("Your Shop Status: " + currentShop.getStatus());
+    System.out.println("Press Enter key to go back Main Menu...");
+    try {
+      System.in.read();
+      displayMainMenu();
+    } catch (Exception e) {
+    }
   }
 
 }
