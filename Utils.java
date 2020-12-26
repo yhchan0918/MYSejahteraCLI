@@ -44,6 +44,9 @@ public class Utils {
     return list;
   }
 
+  public static <E extends Record> void exportToCSV(ArrayList<E> list, String fileName) throws Exception {
+  }
+
   public static int getUserChoice(List<Integer> list) {
 
     while (true) {

@@ -11,7 +11,7 @@ public class UserMain {
 
   public static void main(String[] args) throws Exception {
     System.out.println("Loading......");
-    shopslist = Utils.readListFromFile("Shops.bin");
+    shopslist = Utils.readListFromFile(Record.shopFileName);
 
     displayMainMenu();
 
@@ -70,7 +70,7 @@ public class UserMain {
   }
 
   private static void register() throws Exception {
-    ArrayList<Customer> customerslist = Utils.readListFromFile("Customers.bin");
+    ArrayList<Customer> customerslist = Utils.readListFromFile(Record.customerFileName);
     Utils.displayHeader("Register As New Customer");
     Scanner input = new Scanner(System.in);
     System.out.println("Enter new customer name");
@@ -79,14 +79,14 @@ public class UserMain {
     String phone = input.nextLine();
     Customer newCustomer = new Customer(name, phone);
     customerslist.add(newCustomer);
-    Utils.saveToFile(customerslist, "Customers.bin");
+    Utils.saveToFile(customerslist, Record.customerFileName);
     currentCustomer = newCustomer;
     System.out.println("Successfully Register!!" + "\n");
     displayCustomerMenu();
   }
 
   private static boolean validateUser(String role, String name) throws Exception {
-    ArrayList<Customer> customerslist = Utils.readListFromFile("Customers.bin");
+    ArrayList<Customer> customerslist = Utils.readListFromFile(Record.customerFileName);
     if (role.equals("Customer")) {
       for (Customer customer : customerslist) {
         if (customer.getName().equals(name)) {
@@ -129,7 +129,7 @@ public class UserMain {
   }
 
   private static void checkIn() throws Exception {
-    ArrayList<Visit> visitslist = Utils.readListFromFile("Visits.bin");
+    ArrayList<Visit> visitslist = Utils.readListFromFile(Record.visitFileName);
     Utils.displayHeader("Check In Shop");
     System.out.println("Please Type the No of the Shop you want to check in");
     List<Integer> options = new ArrayList<Integer>();
@@ -140,14 +140,14 @@ public class UserMain {
     }
     int choice = Utils.getUserChoice(options);
     visitslist.add(new Visit(currentCustomer.getName(), shopslist.get(choice - 1).getName()));
-    Utils.saveToFile(visitslist, "Visits.bin");
+    Utils.saveToFile(visitslist, Record.visitFileName);
     System.out.println("Successfully Check In!!");
     goBack();
   }
 
   private static void viewVisitsOfCustomer() throws Exception {
     Utils.displayHeader("View History of the shops you have visted");
-    ArrayList<Visit> visitslist = Utils.readListFromFile("Visits.bin");
+    ArrayList<Visit> visitslist = Utils.readListFromFile(Record.visitFileName);
     // Filter visitslist by currentCustomer name
     visitslist.removeIf(visit -> !(visit.getCustomer().equals(currentCustomer.getName())));
 
