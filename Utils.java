@@ -8,7 +8,7 @@ import java.util.List;
 public class Utils {
   public static <E extends Record> void saveToFile(ArrayList<E> list, String filename) throws Exception {
     try {
-      FileOutputStream fos = new FileOutputStream(filename);
+      FileOutputStream fos = new FileOutputStream(filename + ".bin");
       ObjectOutputStream oos = new ObjectOutputStream(fos);
       oos.writeObject(list);
       oos.close();
@@ -24,7 +24,7 @@ public class Utils {
   public static <T extends Record> ArrayList<T> readListFromFile(String filename) throws Exception {
     ArrayList<T> list = new ArrayList<>();
     try {
-      FileInputStream fis = new FileInputStream(filename);
+      FileInputStream fis = new FileInputStream(filename + ".bin");
       ObjectInputStream ois = new ObjectInputStream(fis);
 
       list = (ArrayList) ois.readObject();
