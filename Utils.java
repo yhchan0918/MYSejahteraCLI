@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.io.*;
 import java.util.InputMismatchException;
@@ -43,6 +44,23 @@ public class Utils {
     }
 
     return list;
+  }
+
+  public static void displayExportCSVPrompt(String[] colNamesList, ArrayList<HashMap<String, String>> data,
+      String filename) throws Exception {
+    System.out.println();
+    System.out.println("Would you like to export to CSV file? If Yes, Enter 1, otherwise Enter 2");
+    System.out.println("1. Yes");
+    System.out.println("2. No");
+    List<Integer> options = Arrays.asList(1, 2);
+    int choice = getUserChoice(options);
+    switch (choice) {
+      case 1:
+        exportToCSV(colNamesList, data, filename);
+        break;
+      case 2:
+        break;
+    }
   }
 
   public static <E extends Record> void exportToCSV(String[] colNamesList, ArrayList<HashMap<String, String>> data,

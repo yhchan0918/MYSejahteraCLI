@@ -142,7 +142,7 @@ public class UserMain {
     visitslist.add(new Visit(currentCustomer.getName(), shopslist.get(choice - 1).getName()));
     Utils.saveToFile(visitslist, Record.visitFilename);
     System.out.println("Successfully Check In!!");
-    goBack();
+    displayGoBackMenu();
   }
 
   private static void viewVisitsOfCustomer() throws Exception {
@@ -169,19 +169,22 @@ public class UserMain {
       }
       // Print Table
       Table.display(colNamesList, hashMapVisitsList);
+      // Display Export CSV Prompt
+      Utils.displayExportCSVPrompt(colNamesList, hashMapVisitsList, currentCustomer.getName() + Record.visitFilename);
     }
 
-    goBack();
+    displayGoBackMenu();
   }
 
   private static void viewCustomerStatus() throws Exception {
     Utils.displayHeader("View Customer Status");
     System.out.println("Your Status: " + currentCustomer.getStatus());
-    goBack();
+    displayGoBackMenu();
   }
 
-  private static void goBack() throws Exception {
-    System.out.println();
+  private static void displayGoBackMenu() throws Exception {
+
+    System.out.println("--------------------------------------------------------------------");
     System.out.println("Please Type the No of your desired action and press ENTER to proceed");
     System.out.println("1. Go Back Customer Menu");
     System.out.println("2. Go To Main Menu");
