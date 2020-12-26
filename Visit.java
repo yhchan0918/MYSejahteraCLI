@@ -31,7 +31,7 @@ public class Visit extends Record {
   }
 
   public String getTime() {
-    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("k:mm:ss");
+    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("kk:mm:ss");
     return dtf.format(this.checkInTime);
   }
 
