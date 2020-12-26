@@ -1,25 +1,23 @@
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import java.io.FileInputStream;
-import java.io.ObjectInputStream;
+import java.io.*;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.List;
 
 public class Utils {
   public static <E extends Record> void saveToFile(ArrayList<E> list, String fileName) throws Exception {
-
     try {
       FileOutputStream fos = new FileOutputStream(fileName);
       ObjectOutputStream oos = new ObjectOutputStream(fos);
       oos.writeObject(list);
       oos.close();
       fos.close();
+    } catch (FileNotFoundException e) {
+      System.out.println("File not found");
     } catch (IOException ioe) {
       ioe.printStackTrace();
     }
+
   }
 
   public static <T extends Record> ArrayList<T> readListFromFile(String filename) throws Exception {
@@ -32,6 +30,9 @@ public class Utils {
 
       ois.close();
       fis.close();
+
+    } catch (FileNotFoundException e) {
+      System.out.println("File not found");
     } catch (IOException ioe) {
       System.out.println("IOException is caught");
 
