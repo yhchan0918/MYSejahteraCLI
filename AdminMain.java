@@ -54,12 +54,7 @@ public class AdminMain {
         }
     }
 
-    // move these to Flag.java
     private static void flag() {
-        System.out.println("flag someone");
 
-        // 1. after flagging a customer as case, need to all checking
     }
-
-    // closeContactTracing in Flag.java
 }

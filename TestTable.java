@@ -8,6 +8,7 @@ public class TestTable {
     String[] colNamesList = { "No", "Date", "Time", "Shop" };
     for (int i = 0; i < visitslist.size(); i++) {
       int index = i + 1;
+
       HashMap<String, String> map = new HashMap<>();
       map.put("No", Integer.toString(index));
       map.put("Date", visitslist.get(i).getDate());
