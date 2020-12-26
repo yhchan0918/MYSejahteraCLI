@@ -1,13 +1,14 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.io.*;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.List;
 
 public class Utils {
-  public static <E extends Record> void saveToFile(ArrayList<E> list, String fileName) throws Exception {
+  public static <E extends Record> void saveToFile(ArrayList<E> list, String filename) throws Exception {
     try {
-      FileOutputStream fos = new FileOutputStream(fileName);
+      FileOutputStream fos = new FileOutputStream(filename);
       ObjectOutputStream oos = new ObjectOutputStream(fos);
       oos.writeObject(list);
       oos.close();
@@ -44,7 +45,34 @@ public class Utils {
     return list;
   }
 
-  public static <E extends Record> void exportToCSV(ArrayList<E> list, String fileName) throws Exception {
+  public static <E extends Record> void exportToCSV(String[] colNamesList, ArrayList<HashMap<String, String>> data,
+      String filename) throws Exception {
+    String res = String.join(",", colNamesList);
+
+    for (HashMap<String, String> d : data) {
+      ArrayList<String> tmpList = new ArrayList<String>();
+      for (String item : colNamesList)
+        tmpList.add(d.get(item));
+      res += "\n" + String.join(",", tmpList);
+    }
+
+    // Create file
+    try {
+      File f = new File(filename + ".csv");
+      f.createNewFile();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+
+    // Write file
+    try {
+      FileWriter f = new FileWriter(filename + ".csv");
+      f.write(res);
+      f.close();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+
   }
 
   public static int getUserChoice(List<Integer> list) {
