@@ -13,7 +13,7 @@ public class AdminView {
 
         // Convert ArrayList<> to hashMap AryList for displaying data
         ArrayList<HashMap<String, String>> hashMapCustomerList = new ArrayList<HashMap<String, String>>();
-        ArrayList<Customer> customerList = Utils.readListFromFile("customers");
+        ArrayList<Customer> customerList = Utils.readListFromFile(Record.customerFilename);
         String[] col = { "No", "Name", "Phone", "Status" };
 
         for (int i = 0; i < customerList.size(); i++) {
@@ -35,7 +35,7 @@ public class AdminView {
         Utils.displayHeader("List of Shops Details");
 
         ArrayList<HashMap<String, String>> hashMapShopList = new ArrayList<HashMap<String, String>>();
-        ArrayList<Shop> shopList = Utils.readListFromFile("shops");
+        ArrayList<Shop> shopList = Utils.readListFromFile(Record.shopFilename);
         String[] col = { "No", "Name", "Phone", "Manager", "Status" };
 
         for (int i = 0; i < shopList.size(); i++) {
@@ -59,7 +59,7 @@ public class AdminView {
         Utils.displayHeader("Master Visit History");
 
         ArrayList<HashMap<String, String>> hashMapMasterVisit = new ArrayList<HashMap<String, String>>();
-        ArrayList<Visit> masterList = Utils.readListFromFile("visits");
+        ArrayList<Visit> masterList = Utils.readListFromFile(Record.visitFilename);
         String[] col = { "No", "Date", "Time", "Customer", "Shop" };
 
         for (int i = 0; i < masterList.size(); i++) {
@@ -90,7 +90,7 @@ public class AdminView {
         int choice = Utils.getUserChoice(options);
         switch (choice) {
             case 1:
-                AdminMain.view();
+                AdminMain.viewMenu();
                 break;
             case 2:
                 AdminMain.adminMainMenu();

@@ -1,5 +1,7 @@
 import java.util.List;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.ArrayList;
 
 public class AdminMain {
     public static void main(String[] args) throws Exception {
@@ -18,17 +20,17 @@ public class AdminMain {
         int choice = Utils.getUserChoice(options);
         switch (choice) {
             case 1:
-                view();
+                viewMenu();
                 break;
             case 2:
-                flag();
+                flagMenu();
                 break;
             case 3:
                 break;
         }
     }
 
-    public static void view() throws Exception {
+    public static void viewMenu() throws Exception {
         Utils.displayHeader("View Data Menu");
         System.out.println("Please choose an option");
         System.out.println("1. Customers Details");
@@ -54,7 +56,19 @@ public class AdminMain {
         }
     }
 
-    private static void flag() {
+    private static void flagMenu() throws Exception {
+        Utils.displayHeader("Flag Menu");
+        System.out.println("Please type in the No of Customer that you want to flag");
+
+        ArrayList<Customer> customerList = Utils.readListFromFile(Record.customerFilename);
+        List<Integer> options = new ArrayList<Integer>();
+
+        for (int i = 0; i < customerList.size(); i++) {
+            int index = i + 1;
+            options.add(index);
+            System.out.println(index + ". " + customerList.get(i).getName());
+        }
+        int choice = Utils.getUserChoice(options);
 
     }
 }
