@@ -1,8 +1,14 @@
 import java.util.HashMap;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Arrays;
 
-public class View {
-    public static void customer() throws Exception {
+public class AdminView {
+    private final static String masterVisitFilename = "MasterVisit";
+    private final static String custViewFilename = "AdminCustView";
+    private final static String shopViewFilename = "AdminShopView";
+
+    public static void displayCustomer() throws Exception {
         Utils.displayHeader("List of Customers Details");
 
         // Convert ArrayList<> to hashMap AryList for displaying data
@@ -21,12 +27,11 @@ public class View {
         }
         Table.display(col, hashMapCustomerList);
 
-        // goBack 2.0 with csv output
-        // stub je
-        AdminMain.adminMainMenu();
+        Utils.displayExportCSVPrompt(col, hashMapCustomerList, custViewFilename);
+        backMenu();
     }
 
-    public static void shop() throws Exception {
+    public static void displayShop() throws Exception {
         Utils.displayHeader("List of Shops Details");
 
         ArrayList<HashMap<String, String>> hashMapShopList = new ArrayList<HashMap<String, String>>();
@@ -45,13 +50,12 @@ public class View {
         }
         Table.display(col, hashMapShopList);
 
-        // goBack 2.0 with csv output
-        // stub je
-        AdminMain.adminMainMenu();
+        Utils.displayExportCSVPrompt(col, hashMapShopList, shopViewFilename);
+        backMenu();
 
     }
 
-    public static void master() throws Exception {
+    public static void displayMasterVisit() throws Exception {
         Utils.displayHeader("Master Visit History");
 
         ArrayList<HashMap<String, String>> hashMapMasterVisit = new ArrayList<HashMap<String, String>>();
@@ -70,9 +74,27 @@ public class View {
         }
         Table.display(col, hashMapMasterVisit);
 
-        // goBack 2.0 with csv output
-        // stub je
-        AdminMain.adminMainMenu();
+        Utils.displayExportCSVPrompt(col, hashMapMasterVisit, masterVisitFilename);
+        backMenu();
 
+    }
+
+    private static void backMenu() throws Exception {
+
+        System.out.println("--------------------------------------------------------------------");
+        System.out.println("Please choose an option");
+        System.out.println("1. Go Back to View Data Menu");
+        System.out.println("2. Go to Main Menu");
+
+        List<Integer> options = Arrays.asList(1, 2);
+        int choice = Utils.getUserChoice(options);
+        switch (choice) {
+            case 1:
+                AdminMain.view();
+                break;
+            case 2:
+                AdminMain.adminMainMenu();
+                break;
+        }
     }
 }

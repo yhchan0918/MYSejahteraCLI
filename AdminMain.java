@@ -28,7 +28,7 @@ public class AdminMain {
         }
     }
 
-    private static void view() throws Exception {
+    public static void view() throws Exception {
         Utils.displayHeader("View Data Menu");
         System.out.println("Please choose an option");
         System.out.println("1. Customers Details");
@@ -40,13 +40,13 @@ public class AdminMain {
         int choice = Utils.getUserChoice(options);
         switch (choice) {
             case 1:
-                View.customer();
+                AdminView.displayCustomer();
                 break;
             case 2:
-                View.shop();
+                AdminView.displayShop();
                 break;
             case 3:
-                View.master();
+                AdminView.displayMasterVisit();
                 break;
             case 4:
                 adminMainMenu();
