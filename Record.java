@@ -1,6 +1,6 @@
 import java.io.Serializable;
 
-public class Record implements Serializable {
+abstract class Record implements Serializable {
 
   private static final long serialVersionUID = 1L;
   public final static String visitFilename = "Visits";
