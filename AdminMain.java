@@ -1,4 +1,7 @@
 import java.util.List;
+
+import javax.sound.midi.SysexMessage;
+
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.ArrayList;
@@ -58,17 +61,41 @@ public class AdminMain {
 
     private static void flagMenu() throws Exception {
         Utils.displayHeader("Flag Menu");
-        System.out.println("Please type in the No of Customer that you want to flag");
 
         ArrayList<Customer> customerList = Utils.readListFromFile(Record.customerFilename);
-        List<Integer> options = new ArrayList<Integer>();
+
+        displayFlagList(customerList); // display all customers
+
+        while (true) {
+            System.out.println("Please type in the No of Customer that you want to flag");
+            int choice = Utils.getUserChoice(1, customerList.size());
+
+            if (customerList.get(choice - 1).getStatus().equals("Case")) {
+                System.out.println("Error, the current Customer of choice is already flagged as \"Case\"");
+                continue;
+            } else {
+                flag(choice - 1);
+                break;
+            }
+        }
+    }
+
+    private static void displayFlagList(ArrayList<Customer> customerList) throws Exception {
+        ArrayList<HashMap<String, String>> hashMapCustomerList = new ArrayList<HashMap<String, String>>();
+        String[] col = { "No", "Name", "Status" };
 
         for (int i = 0; i < customerList.size(); i++) {
             int index = i + 1;
-            options.add(index);
-            System.out.println(index + ". " + customerList.get(i).getName());
+            HashMap<String, String> map = new HashMap<>();
+            map.put("No", Integer.toString(index));
+            map.put("Name", customerList.get(i).getName());
+            map.put("Status", customerList.get(i).getStatus());
+            hashMapCustomerList.add(map);
         }
-        int choice = Utils.getUserChoice(options);
+        Table.display(col, hashMapCustomerList);
+    }
 
+    private static void flag(int choice) throws Exception {
+        System.out.println("wassup shabi im flagging");
     }
 }

@@ -113,6 +113,25 @@ public class Utils {
 
   }
 
+  // overloading
+  public static int getUserChoice(int min, int max) {
+    while (true) {
+      try {
+        Scanner keyboard = new Scanner(System.in);
+        int num = keyboard.nextInt();
+        if (num < min || num > max) {
+          System.out.println("Please Enter Integer within " + min + " - " + max);
+          continue;
+        } else {
+          System.out.println();
+          return num;
+        }
+      } catch (InputMismatchException e) {
+        System.out.println("Only Integer is allowed. Please Try Again");
+      }
+    }
+  }
+
   public static String repeat(int count, String with) {
     return new String(new char[count]).replace("\0", with);
   }
