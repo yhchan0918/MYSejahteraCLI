@@ -15,8 +15,8 @@ public class Initializer {
     customersList.add(new Customer("Neoh", "0158553685", "Close"));
     customersList.add(new Customer("Jason", "0177876345", "Normal"));
 
-    Utils.saveToFile(customersList, Record.customerFilename);
-    ArrayList<Customer> list = Utils.readListFromFile(Record.customerFilename);
+    Utils.saveToFile(customersList, Record.CUSTOMER_FILENAME);
+    ArrayList<Customer> list = Utils.readListFromFile(Record.CUSTOMER_FILENAME);
     for (Customer customer : list) {
       System.out.println(customer);
     }
@@ -30,8 +30,8 @@ public class Initializer {
     shopsList.add(new Shop("Sushi Mentai", "07-4554425", "Normal", "Manager3"));
     shopsList.add(new Shop("Popular BookShop", "07-7647550", "Normal", "Manager4"));
 
-    Utils.saveToFile(shopsList, Record.shopFilename);
-    ArrayList<Shop> list = Utils.readListFromFile(Record.shopFilename);
+    Utils.saveToFile(shopsList, Record.SHOP_FILENAME);
+    ArrayList<Shop> list = Utils.readListFromFile(Record.SHOP_FILENAME);
     for (Shop shop : list) {
       System.out.println(shop);
     }
@@ -46,8 +46,8 @@ public class Initializer {
     visitsList.add(new Visit("Jason", "Sushi Mentai"));
     visitsList.add(new Visit("Delphine", "Popular BookShop"));
 
-    Utils.saveToFile(visitsList, Record.visitFilename);
-    ArrayList<Visit> list = Utils.readListFromFile(Record.visitFilename);
+    Utils.saveToFile(visitsList, Record.VISIT_FILENAME);
+    ArrayList<Visit> list = Utils.readListFromFile(Record.VISIT_FILENAME);
     for (Visit visit : list) {
       System.out.println(visit);
     }
