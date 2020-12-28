@@ -113,7 +113,8 @@ public class UserMain {
     System.out.println("1. Check In Shop");
     System.out.println("2. View the history of the shops you have visted");
     System.out.println("3. View Your Status");
-    List<Integer> options = Arrays.asList(1, 2, 3);
+    System.out.println("4. Logout");
+    List<Integer> options = Arrays.asList(1, 2, 3, 4);
     int choice = Utils.getUserChoice(options);
     switch (choice) {
       case 1:
@@ -125,6 +126,10 @@ public class UserMain {
       case 3:
         viewCustomerStatus();
         break;
+      case 4:
+        displayMainMenu();
+        break;
+
     }
   }
 
@@ -187,7 +192,6 @@ public class UserMain {
     System.out.println("--------------------------------------------------------------------");
     System.out.println("Please Type the No of your desired action and press ENTER to proceed");
     System.out.println("1. Go Back Customer Menu");
-    System.out.println("2. Logout");
 
     List<Integer> options = Arrays.asList(1, 2);
     int choice = Utils.getUserChoice(options);
@@ -195,9 +199,7 @@ public class UserMain {
       case 1:
         displayCustomerMenu();
         break;
-      case 2:
-        displayMainMenu();
-        break;
+
     }
   }
 
