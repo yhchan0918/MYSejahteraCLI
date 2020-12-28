@@ -187,7 +187,7 @@ public class UserMain {
     System.out.println("--------------------------------------------------------------------");
     System.out.println("Please Type the No of your desired action and press ENTER to proceed");
     System.out.println("1. Go Back Customer Menu");
-    System.out.println("2. Go To Main Menu");
+    System.out.println("2. Logout");
 
     List<Integer> options = Arrays.asList(1, 2);
     int choice = Utils.getUserChoice(options);
@@ -204,6 +204,7 @@ public class UserMain {
   private static void displayShopMenu() {
     Utils.displayHeader("View Shop Status");
     System.out.println("Your Shop Status: " + currentShop.getStatus());
+    System.out.println("---------------------------------------");
     System.out.println("Press Enter key to go back Main Menu...");
     try {
       System.in.read();
