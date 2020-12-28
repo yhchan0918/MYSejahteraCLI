@@ -1,4 +1,4 @@
-public class Role extends Record {
+abstract class Role extends Record {
 
   private static final long serialVersionUID = 1L;
   private String name;
