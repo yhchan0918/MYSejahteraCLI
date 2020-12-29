@@ -4,16 +4,42 @@ import java.util.List;
 import java.util.Arrays;
 
 public class AdminView {
-    private final static String masterVisitFilename = "MasterVisit";
-    private final static String custViewFilename = "AdminCustView";
-    private final static String shopViewFilename = "AdminShopView";
+    private final static String MASTER_VIEW_FILENAME = "MasterVisit";
+    private final static String CUST_VIEW_FILENAME = "AdminCustView";
+    private final static String SHOP_VIEW_FILENAME = "AdminShopView";
 
-    public static void displayCustomer() throws Exception {
+    public static void menu() throws Exception {
+        Utils.displayHeader("View Data Menu");
+        System.out.println("Please choose an option");
+        System.out.println("1. Customers Details");
+        System.out.println("2. Shops Details");
+        System.out.println("3. Master Visit History");
+        System.out.println("4. Back");
+
+        List<Integer> options = Arrays.asList(1, 2, 3, 4);
+        int choice = Utils.getUserChoice(options);
+        switch (choice) {
+            case 1:
+                displayCustomer();
+                break;
+            case 2:
+                displayShop();
+                break;
+            case 3:
+                displayMasterVisit();
+                break;
+            case 4:
+                AdminMain.menu();
+                break;
+        }
+    }
+
+    private static void displayCustomer() throws Exception {
         Utils.displayHeader("List of Customers Details");
 
         // Convert ArrayList<> to hashMap AryList for displaying data
         ArrayList<HashMap<String, String>> hashMapCustomerList = new ArrayList<HashMap<String, String>>();
-        ArrayList<Customer> customerList = Utils.readListFromFile(Record.customerFilename);
+        ArrayList<Customer> customerList = Utils.readListFromFile(Record.CUSTOMER_FILENAME);
         String[] col = { "No", "Name", "Phone", "Status" };
 
         for (int i = 0; i < customerList.size(); i++) {
@@ -27,15 +53,15 @@ public class AdminView {
         }
         Table.display(col, hashMapCustomerList);
 
-        Utils.displayExportCSVPrompt(col, hashMapCustomerList, custViewFilename);
+        Utils.displayExportCSVPrompt(col, hashMapCustomerList, CUST_VIEW_FILENAME);
         backMenu();
     }
 
-    public static void displayShop() throws Exception {
+    private static void displayShop() throws Exception {
         Utils.displayHeader("List of Shops Details");
 
         ArrayList<HashMap<String, String>> hashMapShopList = new ArrayList<HashMap<String, String>>();
-        ArrayList<Shop> shopList = Utils.readListFromFile(Record.shopFilename);
+        ArrayList<Shop> shopList = Utils.readListFromFile(Record.SHOP_FILENAME);
         String[] col = { "No", "Name", "Phone", "Manager", "Status" };
 
         for (int i = 0; i < shopList.size(); i++) {
@@ -50,16 +76,16 @@ public class AdminView {
         }
         Table.display(col, hashMapShopList);
 
-        Utils.displayExportCSVPrompt(col, hashMapShopList, shopViewFilename);
+        Utils.displayExportCSVPrompt(col, hashMapShopList, SHOP_VIEW_FILENAME);
         backMenu();
 
     }
 
-    public static void displayMasterVisit() throws Exception {
+    private static void displayMasterVisit() throws Exception {
         Utils.displayHeader("Master Visit History");
 
         ArrayList<HashMap<String, String>> hashMapMasterVisit = new ArrayList<HashMap<String, String>>();
-        ArrayList<Visit> masterList = Utils.readListFromFile(Record.visitFilename);
+        ArrayList<Visit> masterList = Utils.readListFromFile(Record.VISIT_FILENAME);
         String[] col = { "No", "Date", "Time", "Customer", "Shop" };
 
         for (int i = 0; i < masterList.size(); i++) {
@@ -74,7 +100,7 @@ public class AdminView {
         }
         Table.display(col, hashMapMasterVisit);
 
-        Utils.displayExportCSVPrompt(col, hashMapMasterVisit, masterVisitFilename);
+        Utils.displayExportCSVPrompt(col, hashMapMasterVisit, MASTER_VIEW_FILENAME);
         backMenu();
 
     }
@@ -90,10 +116,10 @@ public class AdminView {
         int choice = Utils.getUserChoice(options);
         switch (choice) {
             case 1:
-                AdminMain.viewMenu();
+                menu();
                 break;
             case 2:
-                AdminMain.adminMainMenu();
+                AdminMain.menu();
                 break;
         }
     }
