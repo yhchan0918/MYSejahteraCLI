@@ -24,8 +24,7 @@ public class UserMenu {
     System.out.println("2. Sign In as Shop role");
     System.out.println("3. Register as New Customer");
     System.out.println("4. Exit Program");
-    List<Integer> options = Arrays.asList(1, 2, 3, 4);
-    int choice = Utils.getUserChoice(options);
+    int choice = Utils.getUserChoice(1, 4);
     switch (choice) {
       case 1:
         signIn("Customer");
@@ -112,8 +111,7 @@ public class UserMenu {
     System.out.println("2. View the history of the shops you have visted");
     System.out.println("3. View Your Status");
     System.out.println("4. Logout");
-    List<Integer> options = Arrays.asList(1, 2, 3, 4);
-    int choice = Utils.getUserChoice(options);
+    int choice = Utils.getUserChoice(1, 4);
     switch (choice) {
       case 1:
         checkIn();
@@ -134,13 +132,12 @@ public class UserMenu {
     ArrayList<Visit> visitslist = Utils.readListFromFile(Record.VISIT_FILENAME);
     Utils.displayHeader("Check In Shop");
     System.out.println("Please Type the No of the Shop you want to check in");
-    List<Integer> options = new ArrayList<Integer>();
     for (int i = 0; i < shopslist.size(); i++) {
       int index = i + 1;
-      options.add(index);
+
       System.out.println(index + ". " + shopslist.get(i).getName());
     }
-    int choice = Utils.getUserChoice(options);
+    int choice = Utils.getUserChoice(1, shopslist.size());
     visitslist.add(new Visit(currentCustomer.getName(), shopslist.get(choice - 1).getName()));
     Utils.saveToFile(visitslist, Record.VISIT_FILENAME);
     System.out.println("Successfully Check In!!");
