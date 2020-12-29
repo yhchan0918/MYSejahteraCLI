@@ -106,7 +106,6 @@ public class AdminView {
     }
 
     private static void backMenu() throws Exception {
-
         System.out.println("--------------------------------------------------------------------");
         System.out.println("Please choose an option");
         System.out.println("1. Go Back to View Data Menu");

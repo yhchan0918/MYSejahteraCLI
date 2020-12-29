@@ -22,11 +22,12 @@ public class AdminFlag {
                     System.out.println("Error, the current Customer of choice is already flagged as \"Case\"");
                     continue;
                 } else {
-                    flagCustomer(choice - 1);
+                    flagCustomer(customerList, choice - 1);
                     break;
                 }
             }
         }
+        backMenu();
     }
 
     private static void displayFlagList(ArrayList<Customer> customerList) throws Exception {
@@ -44,7 +45,26 @@ public class AdminFlag {
         Table.display(col, hashMapCustomerList);
     }
 
-    private static void flagCustomer(int choice) throws Exception {
+    private static void flagCustomer(ArrayList<Customer> customerList, int choice) throws Exception {
+        customerList.get(choice).setStatus("Case");
 
+        Utils.displayHeader("Flag Menu");
+        displayFlagList(customerList);
+        Utils.saveToFile(customerList, Record.CUSTOMER_FILENAME);
+
+        System.out.println("\nSuccessfully Flagged " + customerList.get(choice).getName() + " as \"Case\"");
+    }
+
+    private static void backMenu() throws Exception {
+        System.out.println("--------------------------------------------------------------------");
+        System.out.println("Press Enter to return to Main Menu");
+
+        try {
+            System.in.read();
+        } catch (Exception e) {
+            System.out.println("Please press Enter to return to Main Menu ");
+        }
+
+        AdminMain.menu();
     }
 }
