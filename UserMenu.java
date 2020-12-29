@@ -130,18 +130,26 @@ public class UserMenu {
 
   private static void checkIn() throws Exception {
     ArrayList<Visit> visitslist = Utils.readListFromFile(Record.VISIT_FILENAME);
+    int exitIndex = shopslist.size() + 1;
     Utils.displayHeader("Check In Shop");
-    System.out.println("Please Type the No of the Shop you want to check in");
+    System.out.println(
+        "Please Enter the No of the Shop you want to check in or Enter " + (exitIndex) + " to go back Customer Menu");
     for (int i = 0; i < shopslist.size(); i++) {
       int index = i + 1;
 
       System.out.println(index + ". " + shopslist.get(i).getName());
     }
-    int choice = Utils.getUserChoice(1, shopslist.size());
-    visitslist.add(new Visit(currentCustomer.getName(), shopslist.get(choice - 1).getName()));
-    Utils.saveToFile(visitslist, Record.VISIT_FILENAME);
-    System.out.println("Successfully Check In!!");
-    displayGoBackMenu();
+    System.out.println(exitIndex + ". Go Back Customer Menu");
+    int choice = Utils.getUserChoice(1, exitIndex);
+    if (choice == (exitIndex)) {
+      displayCustomerMenu();
+    } else {
+      visitslist.add(new Visit(currentCustomer.getName(), shopslist.get(choice - 1).getName()));
+      Utils.saveToFile(visitslist, Record.VISIT_FILENAME);
+      System.out.println("Successfully Check In!!");
+      displayGoBackMenu();
+    }
+
   }
 
   private static void viewVisitsOfCustomer() throws Exception {
