@@ -4,20 +4,19 @@ import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class UserMain {
+public class UserMenu {
   private static Customer currentCustomer;
   private static Shop currentShop;
   private static ArrayList<Shop> shopslist;
 
-  public static void main(String[] args) throws Exception {
+  public static void main() throws Exception {
     System.out.println("Loading......");
     shopslist = Utils.readListFromFile(Record.SHOP_FILENAME);
 
     displayMainMenu();
-
   }
 
-  private static void displayMainMenu() throws Exception {
+  public static void displayMainMenu() throws Exception {
     Utils.displayHeader("Welcome to Contact Tracing System For COVID-19");
     System.out.println("| Main Menu |");
     System.out.println("Please Type the No of your desired action and press ENTER to proceed");
@@ -42,6 +41,22 @@ public class UserMain {
         System.exit(0);
         break;
     }
+  }
+
+  private static void register() throws Exception {
+    ArrayList<Customer> customerslist = Utils.readListFromFile(Record.CUSTOMER_FILENAME);
+    Utils.displayHeader("Register As New Customer");
+    Scanner input = new Scanner(System.in);
+    System.out.println("Enter new customer name");
+    String name = input.nextLine();
+    System.out.println("Enter new customer phone number");
+    String phone = input.nextLine();
+    Customer newCustomer = new Customer(name, phone);
+    customerslist.add(newCustomer);
+    Utils.saveToFile(customerslist, Record.CUSTOMER_FILENAME);
+    currentCustomer = newCustomer;
+    System.out.println("Successfully Register!!" + "\n");
+    displayCustomerMenu();
   }
 
   private static void signIn(String role) throws Exception {
@@ -69,22 +84,6 @@ public class UserMain {
     }
   }
 
-  private static void register() throws Exception {
-    ArrayList<Customer> customerslist = Utils.readListFromFile(Record.CUSTOMER_FILENAME);
-    Utils.displayHeader("Register As New Customer");
-    Scanner input = new Scanner(System.in);
-    System.out.println("Enter new customer name");
-    String name = input.nextLine();
-    System.out.println("Enter new customer phone number");
-    String phone = input.nextLine();
-    Customer newCustomer = new Customer(name, phone);
-    customerslist.add(newCustomer);
-    Utils.saveToFile(customerslist, Record.CUSTOMER_FILENAME);
-    currentCustomer = newCustomer;
-    System.out.println("Successfully Register!!" + "\n");
-    displayCustomerMenu();
-  }
-
   private static boolean validateUser(String role, String name) throws Exception {
     ArrayList<Customer> customerslist = Utils.readListFromFile(Record.CUSTOMER_FILENAME);
     if (role.equals("Customer")) {
@@ -96,7 +95,6 @@ public class UserMain {
       }
       return false;
     } else {
-
       for (Shop shop : shopslist) {
         if (shop.getName().equals(name)) {
           currentShop = shop;
@@ -113,7 +111,8 @@ public class UserMain {
     System.out.println("1. Check In Shop");
     System.out.println("2. View the history of the shops you have visted");
     System.out.println("3. View Your Status");
-    List<Integer> options = Arrays.asList(1, 2, 3);
+    System.out.println("4. Logout");
+    List<Integer> options = Arrays.asList(1, 2, 3, 4);
     int choice = Utils.getUserChoice(options);
     switch (choice) {
       case 1:
@@ -124,6 +123,9 @@ public class UserMain {
         break;
       case 3:
         viewCustomerStatus();
+        break;
+      case 4:
+        displayMainMenu();
         break;
     }
   }
@@ -184,20 +186,12 @@ public class UserMain {
 
   private static void displayGoBackMenu() throws Exception {
 
-    System.out.println("--------------------------------------------------------------------");
-    System.out.println("Please Type the No of your desired action and press ENTER to proceed");
-    System.out.println("1. Go Back Customer Menu");
-    System.out.println("2. Logout");
-
-    List<Integer> options = Arrays.asList(1, 2);
-    int choice = Utils.getUserChoice(options);
-    switch (choice) {
-      case 1:
-        displayCustomerMenu();
-        break;
-      case 2:
-        displayMainMenu();
-        break;
+    System.out.println("-------------------------------------------");
+    System.out.println("Press Enter key to go back Customer Menu...");
+    try {
+      System.in.read();
+      displayCustomerMenu();
+    } catch (Exception e) {
     }
   }
 
@@ -212,5 +206,4 @@ public class UserMain {
     } catch (Exception e) {
     }
   }
-
 }
