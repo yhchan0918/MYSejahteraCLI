@@ -63,10 +63,10 @@ public class UserMenu {
     Utils.displayHeader(title);
     Scanner input = new Scanner(System.in);
     String prompt = role.equals("Customer") ? "Enter Your Name" : "Enter Your Shop Name";
-
+    String name;
     while (true) {
       System.out.println(prompt + " (Note: Case Sensitive)");
-      String name = input.nextLine();
+      name = input.nextLine();
 
       if (validateUser(role, name)) {
         System.out.println("Successfully Login!!" + "\n");
