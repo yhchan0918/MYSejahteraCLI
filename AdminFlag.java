@@ -51,6 +51,7 @@ public class AdminFlag {
         Utils.displayHeader("Flag Menu");
         displayFlagList(customerList);
         Utils.saveToFile(customerList, Record.CUSTOMER_FILENAME);
+        closeContactTracing();
 
         System.out.println("\nSuccessfully Flagged " + customerList.get(choice).getName() + " as \"Case\"");
     }
@@ -67,4 +68,23 @@ public class AdminFlag {
 
         AdminMain.menu();
     }
+
+    public static void closeContactTracing() throws Exception {
+        ArrayList<Customer> customerList = Utils.readListFromFile(Record.CUSTOMER_FILENAME);
+        ArrayList<Shop> shopList = Utils.readListFromFile(Record.SHOP_FILENAME);
+        ArrayList<Visit> visitList = Utils.readListFromFile(Record.VISIT_FILENAME);
+
+        for (int i = 0; i < customerList.size(); i++) {
+            if (customerList.get(i).getStatus().equals("Case")) {
+
+                for (int j = 0; j < visitList.size(); j++) {
+                    if (visitList.get(j).getCustomer().equals(customerList.get(i).getName())) {
+
+                    }
+                }
+            }
+        }
+    }
+
+    // compareTo
 }
