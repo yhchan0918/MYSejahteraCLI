@@ -75,7 +75,6 @@ public class AdminFlag {
         ArrayList<Visit> visitList = Utils.readListFromFile(Record.VISIT_FILENAME);
 
         // ArrayList<Visit> caseList = new ArrayList<Visit>(); // Declare a empty
-        // ArrayList to store cased Visits
 
         for (int i = 0; i < customerList.size(); i++) { // Find cased Customer
             if (customerList.get(i).getStatus().equals("Case")) {
