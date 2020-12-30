@@ -115,10 +115,11 @@ public class Utils {
 
   // overloading
   public static int getUserChoice(int min, int max) {
+    Scanner input = new Scanner(System.in);
+    int num;
     while (true) {
       try {
-        Scanner keyboard = new Scanner(System.in);
-        int num = keyboard.nextInt();
+        num = input.nextInt();
         if (num < min || num > max) {
           System.out.println("Please Enter Integer within " + min + " - " + max);
           continue;
@@ -128,6 +129,7 @@ public class Utils {
         }
       } catch (InputMismatchException e) {
         System.out.println("Only Integer is allowed. Please Try Again");
+        input.nextLine();
       }
     }
   }
