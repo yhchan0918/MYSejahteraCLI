@@ -120,13 +120,12 @@ public class Utils {
     while (true) {
       try {
         num = input.nextInt();
-        if (num < min || num > max) {
-          System.out.println("Please Enter Integer within " + min + " - " + max);
-          continue;
-        } else {
+        if (num >= min && num <= max) {
           System.out.println();
           return num;
         }
+        System.out.println("Please Enter Integer within " + min + " - " + max);
+        continue;
       } catch (InputMismatchException e) {
         System.out.println("Only Integer is allowed. Please Try Again");
         input.nextLine();
