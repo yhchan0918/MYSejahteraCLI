@@ -1,5 +1,6 @@
 import java.util.HashMap;
 import java.util.ArrayList;
+import java.time.LocalDateTime;
 
 public class AdminFlag {
     public static void menu() throws Exception {
@@ -88,20 +89,39 @@ public class AdminFlag {
         }
 
         for (int i = 0; i < caseVisitList.size(); i++) {
-            for (int j = 0; j < shopList.size(); j++) {
-                if (shopList.get(j).getName().equals(caseVisitList.get(i).getShop())) { // Find shop of Visit and Flag
+            for (int j = 0; j < shopList.size(); j++) { // Find shop of Visit and Flag
+                if (shopList.get(j).getName().equals(caseVisitList.get(i).getShop())) {
                     shopList.get(j).setStatus("Case");
                 }
             }
 
-            for (int j = 0; j < visitList.size(); j++) {
-                // if (caseVisitList.get(1).getTime()) {
-                // flag customer
-                // }
+            for (int j = 0; j < visitList.size(); j++) { // Find time of Interval and Flag
+                if (notCaseVisit(visitList.get(j), caseVisitList)
+                        && inBetweenVisit(visitList.get(j).getCheckInTime(), caseVisitList.get(i).getCheckInTime())) {
+
+                    for (int k = 0; k < customerList.size(); k++) {
+                        if (customerList.get(j).getName().equals(visitList.get(j).getCustomer())) {
+                            customerList.get(j).setStatus("Close");
+                        }
+                    }
+                }
             }
         }
-
+        Utils.saveToFile(customerList, Record.CUSTOMER_FILENAME);
+        Utils.saveToFile(shopList, Record.SHOP_FILENAME);
+        Utils.saveToFile(visitList, Record.VISIT_FILENAME);
     }
 
-    // compareTo
+    private static boolean notCaseVisit(Visit visit, ArrayList<Visit> caseVisitList) {
+        for (int i = 0; i < caseVisitList.size(); i++) {
+            if (visit.equals(caseVisitList.get(i))) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private static boolean inBetweenVisit(LocalDateTime visit, LocalDateTime caseVisit) {
+        return !(visit.isAfter(caseVisit.plusHours(1)) && visit.isBefore(caseVisit.minusHours(1)));
+    }
 }

@@ -9,10 +9,10 @@ public class Initializer {
 
   public static void initCust() throws Exception {
     ArrayList<Customer> customersList = new ArrayList<Customer>();
-    customersList.add(new Customer("Boe", "0155547899", "Case"));
+    customersList.add(new Customer("Boe", "0155547899", "Normal"));
     customersList.add(new Customer("YHChan", "012456789"));
     customersList.add(new Customer("Delphine", "0136744547", "Normal"));
-    customersList.add(new Customer("Neoh", "0158553685", "Close"));
+    customersList.add(new Customer("Neoh", "0158553685", "Normal"));
     customersList.add(new Customer("Jason", "0177876345", "Normal"));
 
     Utils.saveToFile(customersList, Record.CUSTOMER_FILENAME);
@@ -45,6 +45,7 @@ public class Initializer {
     visitsList.add(new Visit("Boe", "Vivo Restaurant"));
     visitsList.add(new Visit("Jason", "Sushi Mentai"));
     visitsList.add(new Visit("Delphine", "Popular BookShop"));
+    visitsList.add(new Visit("Neoh", "Vivo Restaurant"));
 
     Utils.saveToFile(visitsList, Record.VISIT_FILENAME);
     ArrayList<Visit> list = Utils.readListFromFile(Record.VISIT_FILENAME);

@@ -35,6 +35,10 @@ public class Visit extends Record {
     return dtf.format(this.checkInTime);
   }
 
+  public LocalDateTime getCheckInTime() {
+    return this.checkInTime;
+  }
+
   public String toString() {
     return getDate() + " " + getTime() + " " + customer + " " + shop;
   }
