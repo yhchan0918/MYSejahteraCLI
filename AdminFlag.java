@@ -48,11 +48,12 @@ public class AdminFlag {
 
     private static void flagCustomer(ArrayList<Customer> customerList, int choice) throws Exception {
         customerList.get(choice).setStatus("Case");
+        Utils.saveToFile(customerList, Record.CUSTOMER_FILENAME);
+
+        closeContactTracing();
 
         Utils.displayHeader("Flag Menu");
         displayFlagList(customerList);
-        Utils.saveToFile(customerList, Record.CUSTOMER_FILENAME);
-        closeContactTracing();
 
         System.out.println("\nSuccessfully Flagged " + customerList.get(choice).getName() + " as \"Case\"");
     }
@@ -94,34 +95,28 @@ public class AdminFlag {
                     shopList.get(j).setStatus("Case");
                 }
             }
-
-            for (int j = 0; j < visitList.size(); j++) { // Find time of Interval and Flag
-                if (notCaseVisit(visitList.get(j), caseVisitList)
-                        && inBetweenVisit(visitList.get(j).getCheckInTime(), caseVisitList.get(i).getCheckInTime())) {
-
-                    for (int k = 0; k < customerList.size(); k++) {
-                        if (customerList.get(j).getName().equals(visitList.get(j).getCustomer())) {
-                            customerList.get(j).setStatus("Close");
-                        }
-                    }
-                }
-            }
         }
         Utils.saveToFile(customerList, Record.CUSTOMER_FILENAME);
         Utils.saveToFile(shopList, Record.SHOP_FILENAME);
         Utils.saveToFile(visitList, Record.VISIT_FILENAME);
     }
-
-    private static boolean notCaseVisit(Visit visit, ArrayList<Visit> caseVisitList) {
-        for (int i = 0; i < caseVisitList.size(); i++) {
-            if (visit.equals(caseVisitList.get(i))) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    private static boolean inBetweenVisit(LocalDateTime visit, LocalDateTime caseVisit) {
-        return !(visit.isAfter(caseVisit.plusHours(1)) && visit.isBefore(caseVisit.minusHours(1)));
-    }
 }
+
+/*
+ * for (int k = 0; k < visitList.size(); k++) { // Find time of Interval and
+ * Flag if (notCaseVisit(visitList.get(k), caseVisitList) && inBetweenVisit(
+ * visitList.get(k).getCheckInTime(), caseVisitList.get(i).getCheckInTime())) {
+ * 
+ * for (int l = 0; l < customerList.size(); l++) { if
+ * (customerList.get(l).getName().equals(visitList.get(k).getCustomer())) {
+ * customerList.get(k).setStatus("Close"); // debugg
+ * System.out.println("loop ok"); // debugg } } } }
+ * 
+ * private static boolean notCaseVisit(Visit visit, ArrayList<Visit>
+ * caseVisitList) { for (int i = 0; i < caseVisitList.size(); i++) { if
+ * (visit.equals(caseVisitList.get(i))) { return false; } } return true; }
+ * 
+ * private static boolean inBetweenVisit(LocalDateTime visit, LocalDateTime
+ * caseVisit) { return !(visit.isAfter(caseVisit.plusHours(1)) ||
+ * visit.isBefore(caseVisit.minusHours(1))); } }
+ */
