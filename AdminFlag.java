@@ -74,26 +74,30 @@ public class AdminFlag {
         ArrayList<Shop> shopList = Utils.readListFromFile(Record.SHOP_FILENAME);
         ArrayList<Visit> visitList = Utils.readListFromFile(Record.VISIT_FILENAME);
 
-        // ArrayList<Visit> caseList = new ArrayList<Visit>(); // Declare a empty
+        ArrayList<Visit> caseVisitList = new ArrayList<Visit>(); // Declare a empty ArrayList to store cased data
 
         for (int i = 0; i < customerList.size(); i++) { // Find cased Customer
             if (customerList.get(i).getStatus().equals("Case")) {
 
                 for (int j = 0; j < visitList.size(); j++) { // Find cased Customer's Visit
                     if (visitList.get(j).getCustomer().equals(customerList.get(i).getName())) {
-                        // caseList.add(visitList.get(j));
-
-                        for (int k = 0; k < shopList.size(); k++) { // Find shop of Visit and Flag
-                            if (shopList.get(k).getName().equals(visitList.get(j).getShop())) {
-                                shopList.get(k).setStatus("Case");
-
-                                for (int l = 0; l < visitList.size(); l++) { // Find time interval of other shop Visits
-                                    // if (visitList.get(l).getTime() > visitList.get(j).getTime())
-                                }
-                            }
-                        }
+                        caseVisitList.add(visitList.get(j));
                     }
                 }
+            }
+        }
+
+        for (int i = 0; i < caseVisitList.size(); i++) {
+            for (int j = 0; j < shopList.size(); j++) {
+                if (shopList.get(j).getName().equals(caseVisitList.get(i).getShop())) { // Find shop of Visit and Flag
+                    shopList.get(j).setStatus("Case");
+                }
+            }
+
+            for (int j = 0; j < visitList.size(); j++) {
+                // if (caseVisitList.get(1).getTime()) {
+                // flag customer
+                // }
             }
         }
 
