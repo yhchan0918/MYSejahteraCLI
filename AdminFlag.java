@@ -77,6 +77,7 @@ public class AdminFlag {
         ArrayList<Visit> visitList = Utils.readListFromFile(Record.VISIT_FILENAME);
 
         ArrayList<Visit> caseVisitList = new ArrayList<Visit>(); // Declare a empty ArrayList to store cased data
+        ArrayList<String> caseShopName = new ArrayList<String>();
 
         for (int i = 0; i < customerList.size(); i++) { // Find cased Customer
             if (customerList.get(i).getStatus().equals("Case")) {
@@ -93,30 +94,54 @@ public class AdminFlag {
             for (int j = 0; j < shopList.size(); j++) { // Find shop of Visit and Flag
                 if (shopList.get(j).getName().equals(caseVisitList.get(i).getShop())) {
                     shopList.get(j).setStatus("Case");
+                    caseShopName.add(shopList.get(j).getName());
                 }
             }
         }
+
+        for (int i = 0; i < visitList.size(); i++) {
+            if (notCaseVisit(visitList.get(i), caseVisitList)
+                    && inBetweenVisit(visitList.get(i).getCheckInTime(), caseVisitList)
+                    && isShop(visitList.get(i).getShop(), caseShopName)) {
+
+                for (int j = 0; j < customerList.size(); j++) {
+                    if (customerList.get(j).getName().equals(visitList.get(i).getCustomer())) {
+                        customerList.get(j).setStatus("Close");
+                    }
+                }
+            }
+        }
+
         Utils.saveToFile(customerList, Record.CUSTOMER_FILENAME);
         Utils.saveToFile(shopList, Record.SHOP_FILENAME);
         Utils.saveToFile(visitList, Record.VISIT_FILENAME);
     }
-}
 
-/*
- * for (int k = 0; k < visitList.size(); k++) { // Find time of Interval and
- * Flag if (notCaseVisit(visitList.get(k), caseVisitList) && inBetweenVisit(
- * visitList.get(k).getCheckInTime(), caseVisitList.get(i).getCheckInTime())) {
- * 
- * for (int l = 0; l < customerList.size(); l++) { if
- * (customerList.get(l).getName().equals(visitList.get(k).getCustomer())) {
- * customerList.get(k).setStatus("Close"); // debugg
- * System.out.println("loop ok"); // debugg } } } }
- * 
- * private static boolean notCaseVisit(Visit visit, ArrayList<Visit>
- * caseVisitList) { for (int i = 0; i < caseVisitList.size(); i++) { if
- * (visit.equals(caseVisitList.get(i))) { return false; } } return true; }
- * 
- * private static boolean inBetweenVisit(LocalDateTime visit, LocalDateTime
- * caseVisit) { return !(visit.isAfter(caseVisit.plusHours(1)) ||
- * visit.isBefore(caseVisit.minusHours(1))); } }
- */
+    private static boolean notCaseVisit(Visit visit, ArrayList<Visit> caseVisitList) {
+        for (int i = 0; i < caseVisitList.size(); i++) {
+            if (visit.equals(caseVisitList.get(i))) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private static boolean inBetweenVisit(LocalDateTime visit, ArrayList<Visit> caseVisitList) {
+        for (int i = 0; i < caseVisitList.size(); i++) {
+            if (visit.isAfter(caseVisitList.get(i).getCheckInTime().plusHours(1))
+                    || visit.isBefore(caseVisitList.get(i).getCheckInTime().minusHours(1))) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private static boolean isShop(String shop, ArrayList<String> caseShopName) {
+        for (int i = 0; i < caseShopName.size(); i++) {
+            if (shop == caseShopName.get(i)) {
+                return true;
+            }
+        }
+        return false;
+    }
+}
