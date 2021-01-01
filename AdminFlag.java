@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.time.LocalDateTime;
 
 public class AdminFlag {
+
     public static void menu() throws Exception {
         Utils.displayHeader("Flag Menu");
 
@@ -52,6 +53,7 @@ public class AdminFlag {
 
         closeContactTracing();
 
+        customerList = Utils.readListFromFile(Record.CUSTOMER_FILENAME);
         Utils.displayHeader("Flag Menu");
         displayFlagList(customerList);
 
@@ -76,72 +78,112 @@ public class AdminFlag {
         ArrayList<Shop> shopList = Utils.readListFromFile(Record.SHOP_FILENAME);
         ArrayList<Visit> visitList = Utils.readListFromFile(Record.VISIT_FILENAME);
 
-        ArrayList<Visit> caseVisitList = new ArrayList<Visit>(); // Declare a empty ArrayList to store cased data
-        ArrayList<String> caseShopName = new ArrayList<String>();
+        ArrayList<Visit> caseVisitList = new ArrayList<Visit>(); // Declare empty ArrayList to store cased data
+        ArrayList<String> caseShopNameList = new ArrayList<String>();
+        ArrayList<String> caseCustomerNameList = new ArrayList<String>();
+        ArrayList<String> closeCustomerNameList = new ArrayList<String>();
 
-        for (int i = 0; i < customerList.size(); i++) { // Find cased Customer
-            if (customerList.get(i).getStatus().equals("Case")) {
+        caseCustomerNameList = getCaseCustomerName(customerList); // Process
+        caseVisitList = getCaseVisitList(visitList, caseCustomerNameList);
+        caseShopNameList = getCaseShopName(caseVisitList);
+        closeCustomerNameList = getCloseCustomerName(visitList, caseVisitList);
 
-                for (int j = 0; j < visitList.size(); j++) { // Find cased Customer's Visit
-                    if (visitList.get(j).getCustomer().equals(customerList.get(i).getName())) {
-                        caseVisitList.add(visitList.get(j));
-                    }
-                }
-            }
-        }
-
-        for (int i = 0; i < caseVisitList.size(); i++) {
-            for (int j = 0; j < shopList.size(); j++) { // Find shop of Visit and Flag
-                if (shopList.get(j).getName().equals(caseVisitList.get(i).getShop())) {
-                    shopList.get(j).setStatus("Case");
-                    caseShopName.add(shopList.get(j).getName());
-                }
-            }
-        }
-
-        for (int i = 0; i < visitList.size(); i++) {
-            if (notCaseVisit(visitList.get(i), caseVisitList)
-                    && inBetweenVisit(visitList.get(i).getCheckInTime(), caseVisitList)
-                    && isShop(visitList.get(i).getShop(), caseShopName)) {
-
-                for (int j = 0; j < customerList.size(); j++) {
-                    if (customerList.get(j).getName().equals(visitList.get(i).getCustomer())) {
-                        customerList.get(j).setStatus("Close");
-                    }
-                }
-            }
-        }
+        shopList = flagCaseShop(shopList, caseShopNameList); // Flag
+        customerList = flagCloseCustomer(customerList, closeCustomerNameList);
 
         Utils.saveToFile(customerList, Record.CUSTOMER_FILENAME);
         Utils.saveToFile(shopList, Record.SHOP_FILENAME);
         Utils.saveToFile(visitList, Record.VISIT_FILENAME);
     }
 
-    private static boolean notCaseVisit(Visit visit, ArrayList<Visit> caseVisitList) {
-        for (int i = 0; i < caseVisitList.size(); i++) {
-            if (visit.equals(caseVisitList.get(i))) {
-                return false;
+    private static ArrayList<String> getCaseCustomerName(ArrayList<Customer> custList) {
+        ArrayList<String> caseCustNameList = new ArrayList<String>();
+
+        for (int i = 0; i < custList.size(); i++) {
+            if (custList.get(i).getStatus().equals("Case")) {
+                caseCustNameList.add(custList.get(i).getName());
             }
+        }
+
+        return caseCustNameList;
+    }
+
+    private static ArrayList<Visit> getCaseVisitList(ArrayList<Visit> visitList, ArrayList<String> caseCustName) {
+        ArrayList<Visit> caseVisitList = new ArrayList<Visit>();
+
+        for (int i = 0; i < visitList.size(); i++) {
+            for (int j = 0; j < caseCustName.size(); j++) {
+                if (caseCustName.get(j).equals(visitList.get(i).getCustomer())) {
+                    caseVisitList.add(visitList.get(i));
+                }
+            }
+        }
+        return caseVisitList;
+    }
+
+    private static ArrayList<String> getCaseShopName(ArrayList<Visit> caseVisitList) {
+        ArrayList<String> caseShopNameList = new ArrayList<String>();
+
+        for (int i = 0; i < caseVisitList.size(); i++) {
+            caseShopNameList.add(caseVisitList.get(i).getShop());
+        }
+        return caseShopNameList;
+    }
+
+    private static ArrayList<String> getCloseCustomerName(ArrayList<Visit> visitList, ArrayList<Visit> caseVisitList) {
+        ArrayList<String> closeCustNameList = new ArrayList<String>();
+
+        for (int i = 0; i < visitList.size(); i++) {
+            for (int j = 0; j < caseVisitList.size(); j++) {
+                if (notCaseVisit(visitList.get(i), caseVisitList.get(j))
+                        && sameShop(visitList.get(i).getShop(), caseVisitList.get(j).getShop())
+                        && timeInterval(visitList.get(i).getCheckInTime(), caseVisitList.get(j).getCheckInTime())) {
+                    closeCustNameList.add(visitList.get(i).getCustomer());
+                }
+            }
+        }
+        return closeCustNameList;
+    }
+
+    private static boolean notCaseVisit(Visit visit, Visit caseVisit) {
+        return !(visit.equals(caseVisit));
+    }
+
+    private static boolean sameShop(String shop, String caseShop) {
+        return (shop == caseShop);
+    }
+
+    private static boolean timeInterval(LocalDateTime visitTime, LocalDateTime caseVisitTime) {
+        if (visitTime.isAfter(caseVisitTime.plusHours(1)) || visitTime.isBefore(caseVisitTime.minusHours(1))) {
+            return false;
         }
         return true;
     }
 
-    private static boolean inBetweenVisit(LocalDateTime visit, ArrayList<Visit> caseVisitList) {
-        for (int i = 0; i < caseVisitList.size(); i++) {
-            if (visit.isAfter(caseVisitList.get(i).getCheckInTime().plusHours(1))
-                    || visit.isBefore(caseVisitList.get(i).getCheckInTime().minusHours(1))) {
-                return false;
+    private static ArrayList<Shop> flagCaseShop(ArrayList<Shop> shopList, ArrayList<String> caseShopName) {
+        for (int i = 0; i < shopList.size(); i++) {
+            for (int j = 0; j < caseShopName.size(); j++) {
+                if (caseShopName.get(j).equals(shopList.get(i).getName())) {
+
+                    shopList.get(i).setStatus("Case");
+                }
             }
         }
-        return true;
+        return shopList;
     }
 
-    private static boolean isShop(String shop, ArrayList<String> caseShopName) {
-        for (int i = 0; i < caseShopName.size(); i++) {
-            if (shop == caseShopName.get(i)) {
-                return true;
+    private static ArrayList<Customer> flagCloseCustomer(ArrayList<Customer> custList,
+            ArrayList<String> closeCustName) {
+        for (int i = 0; i < custList.size(); i++) {
+            for (int j = 0; j < closeCustName.size(); j++) {
+                if (closeCustName.get(j).equals(custList.get(i).getName())
+                        && custList.get(i).getStatus().equals("Normal")) {
+
+                    custList.get(i).setStatus("Close");
+                }
             }
         }
-        return false;
+        return custList;
     }
+
 }
