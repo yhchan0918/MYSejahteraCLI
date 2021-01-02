@@ -3,7 +3,6 @@ import java.util.Arrays;
 
 public class AdminMain {
     public static void main(String[] args) throws Exception {
-
         menu();
     }
 
@@ -12,7 +11,8 @@ public class AdminMain {
         System.out.println("Please choose an action");
         System.out.println("1. View Data");
         System.out.println("2. Flag");
-        System.out.println("3. Exit");
+        System.out.println("3. Generate 30 Visits");
+        System.out.println("4. Exit");
 
         List<Integer> options = Arrays.asList(1, 2, 3);
         int choice = Utils.getUserChoice(options);
@@ -24,10 +24,12 @@ public class AdminMain {
                 AdminFlag.menu();
                 break;
             case 3:
+                AdminGenerate.menu();
+                break;
+            case 4:
                 System.out.println("Exiting...");
                 System.out.println("See you again, Admin");
                 break;
         }
     }
 }
-// VisitGenerator

@@ -1,7 +1,7 @@
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class Visit extends Record {
+public class Visit extends Record implements Comparable<Visit> {
 
   private static final long serialVersionUID = 1L;
   private LocalDateTime checkInTime;
@@ -15,6 +15,12 @@ public class Visit extends Record {
     this.checkInTime = LocalDateTime.now();
     this.customer = customer;
     this.shop = shop;
+  };
+
+  public Visit(String customer, String shop, LocalDateTime checkInTime) {
+    this.customer = customer;
+    this.shop = shop;
+    this.checkInTime = checkInTime;
   };
 
   public String getCustomer() {
@@ -41,5 +47,10 @@ public class Visit extends Record {
 
   public String toString() {
     return getDate() + " " + getTime() + " " + customer + " " + shop;
+  }
+
+  @Override
+  public int compareTo(Visit o) {
+    return this.getCheckInTime().compareTo(o.getCheckInTime());
   }
 }
