@@ -148,15 +148,9 @@ public class AdminFlag {
     return !(visit.equals(caseVisit));
   }
 
-<<<<<<< HEAD
-    private static boolean sameShop(String shop, String caseShop) {
-        return (shop.equals(caseShop));
-    }
-=======
   private static boolean sameShop(String shop, String caseShop) {
     return (shop.equals(caseShop));
   }
->>>>>>> afbf29eac6d10be74751ee097856c59b4f6dce54
 
   private static boolean timeInterval(LocalDateTime visitTime, LocalDateTime caseVisitTime) {
     if (visitTime.isAfter(caseVisitTime.plusHours(1)) || visitTime.isBefore(caseVisitTime.minusHours(1))) {
