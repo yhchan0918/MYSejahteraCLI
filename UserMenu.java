@@ -147,9 +147,13 @@ public class UserMenu {
       Visit newVisit = new Visit(currentCustomer.getName(), shopslist.get(choice - 1).getName());
       visitslist.add(newVisit);
       Utils.saveToFile(visitslist, Record.VISIT_FILENAME);
+<<<<<<< HEAD
 
       AdminFlag.closeContactTracing();
 
+=======
+      AdminFlag.closeContactTracing();
+>>>>>>> afbf29eac6d10be74751ee097856c59b4f6dce54
       System.out.println(
           "Successfully Check In " + newVisit.getShop() + " On " + newVisit.getDate() + " At " + newVisit.getTime());
       displayGoBackMenu();
@@ -189,6 +193,7 @@ public class UserMenu {
   }
 
   private static void viewCustomerStatus() throws Exception {
+    AdminFlag.closeContactTracing();
     Utils.displayHeader("View Customer Status");
     System.out.println("Your Status: " + currentCustomer.getStatus());
     displayGoBackMenu();
