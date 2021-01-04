@@ -187,6 +187,7 @@ public class UserMenu {
   }
 
   private static void viewCustomerStatus() throws Exception {
+    AdminFlag.closeContactTracing();
     Utils.displayHeader("View Customer Status");
     System.out.println("Your Status: " + currentCustomer.getStatus());
     displayGoBackMenu();
