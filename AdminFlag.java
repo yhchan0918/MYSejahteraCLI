@@ -150,7 +150,7 @@ public class AdminFlag {
     }
 
     private static boolean sameShop(String shop, String caseShop) {
-        return (shop == caseShop);
+        return (shop.equals(caseShop));
     }
 
     private static boolean timeInterval(LocalDateTime visitTime, LocalDateTime caseVisitTime) {
