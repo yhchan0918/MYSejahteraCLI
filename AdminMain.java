@@ -14,7 +14,7 @@ public class AdminMain {
         System.out.println("3. Generate 30 Visits");
         System.out.println("4. Exit");
 
-        List<Integer> options = Arrays.asList(1, 2, 3);
+        List<Integer> options = Arrays.asList(1, 2, 3, 4);
         int choice = Utils.getUserChoice(options);
         switch (choice) {
             case 1:

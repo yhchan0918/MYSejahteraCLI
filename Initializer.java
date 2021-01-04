@@ -41,7 +41,7 @@ public class Initializer {
   public static void initVisit() throws Exception {
     ArrayList<Visit> visitsList = new ArrayList<Visit>();
 
-    visitsList.add(new Visit("YhChan", "Watsons"));
+    visitsList.add(new Visit("YHChan", "Watsons"));
     visitsList.add(new Visit("Boe", "Vivo Restaurant"));
     visitsList.add(new Visit("Jason", "Sushi Mentai"));
     visitsList.add(new Visit("Delphine", "Popular BookShop"));
