@@ -50,7 +50,7 @@ public class Visit extends Record implements Comparable<Visit> {
   }
 
   @Override
-  public int compareTo(Visit o) {
-    return this.getCheckInTime().compareTo(o.getCheckInTime());
+  public int compareTo(Visit v) {
+    return this.getCheckInTime().compareTo(v.getCheckInTime());
   }
 }
