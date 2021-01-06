@@ -7,7 +7,7 @@ public class Initializer {
   public static void main(String[] args) throws Exception {
     initCust();
     initShop();
-    initVisit();
+
   }
 
   public static void initCust() throws Exception {
@@ -41,19 +41,4 @@ public class Initializer {
 
   }
 
-  public static void initVisit() throws Exception {
-    ArrayList<Visit> visitsList = new ArrayList<Visit>();
-
-    visitsList.add(new Visit("Chan", "Watsons"));
-    visitsList.add(new Visit("Boe", "Vivo Restaurant"));
-    visitsList.add(new Visit("Jason", "Sushi Mentai"));
-    visitsList.add(new Visit("Delphine", "Popular BookShop"));
-    visitsList.add(new Visit("Neoh", "Vivo Restaurant"));
-
-    Utils.saveToFile(visitsList, Record.VISIT_FILENAME);
-    ArrayList<Visit> list = Utils.readListFromFile(Record.VISIT_FILENAME);
-    for (Visit visit : list) {
-      System.out.println(visit);
-    }
-  }
 }

@@ -15,7 +15,7 @@ public class Utils {
       oos.close();
       fos.close();
     } catch (FileNotFoundException e) {
-      System.out.println("File not found");
+      System.out.println("Record not found");
     } catch (IOException ioe) {
       ioe.printStackTrace();
     }
@@ -34,7 +34,7 @@ public class Utils {
       fis.close();
 
     } catch (FileNotFoundException e) {
-      System.out.println("File not found");
+      System.out.println("Record not found");
     } catch (IOException ioe) {
       System.out.println("IOException is caught");
 
