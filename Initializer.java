@@ -1,5 +1,8 @@
 import java.util.ArrayList;
 
+/**
+ * This class is for resetting dataList
+ */
 public class Initializer {
   public static void main(String[] args) throws Exception {
     initCust();
@@ -10,7 +13,7 @@ public class Initializer {
   public static void initCust() throws Exception {
     ArrayList<Customer> customersList = new ArrayList<Customer>();
     customersList.add(new Customer("Boe", "0155547899", "Normal"));
-    customersList.add(new Customer("Chan", "012456789"));
+    customersList.add(new Customer("Chan", "012456789", "Normal"));
     customersList.add(new Customer("Delphine", "0136744547", "Normal"));
     customersList.add(new Customer("Neoh", "0158553685", "Normal"));
     customersList.add(new Customer("Jason", "0177876345", "Normal"));
