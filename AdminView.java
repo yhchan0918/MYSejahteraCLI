@@ -89,7 +89,7 @@ public class AdminView {
     if (masterList.isEmpty()) {
       System.out.println("There is no Master Visit record yet");
     } else {
-      String[] col = { "No", "Date", "Time", "Customer", "Shop" };
+      String[] col = { "No", "Date", "Time", "Customer", "Customer Status", "Shop", "Shop Status" };
 
       for (int i = 0; i < masterList.size(); i++) {
         int index = i + 1;
@@ -98,7 +98,9 @@ public class AdminView {
         map.put("Date", masterList.get(i).getDate());
         map.put("Time", masterList.get(i).getTime());
         map.put("Customer", masterList.get(i).getCustomer());
+        map.put("Customer Status", getCustStatus(masterList.get(i).getCustomer()));
         map.put("Shop", masterList.get(i).getShop());
+        map.put("Shop Status", getShopStatus(masterList.get(i).getShop()));
         hashMapMasterVisit.add(map);
       }
       Table.display(col, hashMapMasterVisit);
@@ -108,6 +110,26 @@ public class AdminView {
 
     goBackMenu();
 
+  }
+
+  private static String getCustStatus(String name) throws Exception {
+    ArrayList<Customer> custList = Utils.readListFromFile(Record.CUSTOMER_FILENAME);
+    for (int i = 0; i < custList.size(); i++) {
+      if (name.equals(custList.get(i).getName())) {
+        return custList.get(i).getStatus();
+      }
+    }
+    return "null"; // invalid
+  }
+
+  private static String getShopStatus(String name) throws Exception {
+    ArrayList<Shop> shopList = Utils.readListFromFile(Record.SHOP_FILENAME);
+    for (int i = 0; i < shopList.size(); i++) {
+      if (name.equals(shopList.get(i).getName())) {
+        return shopList.get(i).getStatus();
+      }
+    }
+    return "null"; // invalid
   }
 
   private static void goBackMenu() throws Exception {

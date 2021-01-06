@@ -185,13 +185,7 @@ public class UserMenu {
   }
 
   private static void viewCustomerStatus() throws Exception {
-    ArrayList<Customer> customerslist = Utils.readListFromFile(Record.CUSTOMER_FILENAME);
-    for (Customer customer : customerslist) {
-      if (customer.getName().equals(currentCustomer.getName())) {
-        currentCustomer = customer;
-
-      }
-    }
+    AdminFlag.closeContactTracing();
     Utils.displayHeader("View Customer Status");
     System.out.println("Your Status: " + currentCustomer.getStatus());
     displayGoBackMenu();
