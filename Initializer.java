@@ -10,7 +10,7 @@ public class Initializer {
   public static void initCust() throws Exception {
     ArrayList<Customer> customersList = new ArrayList<Customer>();
     customersList.add(new Customer("Boe", "0155547899", "Normal"));
-    customersList.add(new Customer("YHChan", "012456789"));
+    customersList.add(new Customer("Chan", "012456789"));
     customersList.add(new Customer("Delphine", "0136744547", "Normal"));
     customersList.add(new Customer("Neoh", "0158553685", "Normal"));
     customersList.add(new Customer("Jason", "0177876345", "Normal"));
@@ -41,7 +41,7 @@ public class Initializer {
   public static void initVisit() throws Exception {
     ArrayList<Visit> visitsList = new ArrayList<Visit>();
 
-    visitsList.add(new Visit("YHChan", "Watsons"));
+    visitsList.add(new Visit("Chan", "Watsons"));
     visitsList.add(new Visit("Boe", "Vivo Restaurant"));
     visitsList.add(new Visit("Jason", "Sushi Mentai"));
     visitsList.add(new Visit("Delphine", "Popular BookShop"));
